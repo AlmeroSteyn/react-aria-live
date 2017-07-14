@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 import {render} from 'react-dom'
 
-import Example from '../../src'
+import LiveAnnouncer from '../../src/modules/LiveAnnouncer'
 
 class Demo extends Component {
   render() {
     return <div>
       <h1>react-aria-live Demo</h1>
-      <Example/>
+      <LiveAnnouncer/>
     </div>
   }
 }
