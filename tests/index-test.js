@@ -1,23 +1,23 @@
-import expect from 'expect'
-import React from 'react'
-import {render, unmountComponentAtNode} from 'react-dom'
+import expect from 'expect';
+import React from 'react';
+import { render, unmountComponentAtNode } from 'react-dom';
 
-import Component from 'src/'
+import PoliteMessage from 'src/modules/PoliteMessage';
 
-describe('Component', () => {
-  let node
+describe('PoliteMessage', () => {
+    let node;
 
-  beforeEach(() => {
-    node = document.createElement('div')
-  })
+    beforeEach(() => {
+        node = document.createElement('div');
+    });
 
-  afterEach(() => {
-    unmountComponentAtNode(node)
-  })
+    afterEach(() => {
+        unmountComponentAtNode(node);
+    });
 
-  it('displays a welcome message', () => {
-    render(<Component/>, node, () => {
-      expect(node.innerHTML).toContain('Welcome to React components')
-    })
-  })
-})
+    it('renders a polite message', () => {
+        render(<PoliteMessage message="Some message" />, node, () => {
+            expect(node.innerHTML).toContain('Some message');
+        });
+    });
+});

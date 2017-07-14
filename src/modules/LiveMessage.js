@@ -2,6 +2,11 @@ import PropTypes from 'prop-types';
 import { Component } from 'react';
 
 class LiveMessage extends Component {
+  static propTypes = {
+      message: PropTypes.string.isRequired,
+      'aria-live': PropTypes.string.isRequired,
+  };
+
   static contextTypes = {
     announcePolite: PropTypes.func.isRequired,
     announceAssertive: PropTypes.func.isRequired,
