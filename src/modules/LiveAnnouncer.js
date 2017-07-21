@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import AssertiveAnnouncer from './AssertiveAnnouncer';
-import PoliteAnnouncer from './PoliteAnnouncer';
+import Announcer from './Announcer';
 
 class LiveAnnouncer extends Component {
   constructor(props) {
@@ -40,10 +39,13 @@ class LiveAnnouncer extends Component {
   }
 
   render() {
+    const { announcePoliteMessage, announceAssertiveMessage } = this.state;
     return (
       <div>
-        <PoliteAnnouncer message={this.state.announcePoliteMessage} />
-        <AssertiveAnnouncer message={this.state.announceAssertiveMessage} />
+        <Announcer
+          assertiveMessage={announceAssertiveMessage}
+          politeMessage={announcePoliteMessage}
+        />
         {this.props.children}
       </div>
     );

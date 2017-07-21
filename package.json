@@ -1,6 +1,6 @@
 {
   "name": "react-aria-live",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Add aria-live messaging to your React app",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -14,18 +14,66 @@
     "build": "nwb build-react-component",
     "clean": "nwb clean-module && nwb clean-demo",
     "start": "nwb serve-react-demo",
-    "test": "nwb test-react",
-    "test:coverage": "nwb test-react --coverage",
-    "test:watch": "nwb test-react --server"
+    "test": "node scripts/test.js --env=jsdom",
+    "format": "prettier --write --single-quote --tab-width=2 --trailing-comma=es5 --jsx-bracket-same-line src/**/*.js"
   },
   "dependencies": {},
   "peerDependencies": {
     "react": "15.x"
   },
   "devDependencies": {
+    "babel-core": "6.25.0",
+    "babel-eslint": "7.2.3",
+    "babel-jest": "20.0.3",
+    "babel-preset-react-app": "^3.0.1",
+    "enzyme": "^2.9.1",
+    "enzyme-to-json": "^1.5.1",
+    "eslint": "3.19.0",
+    "eslint-config-react-app": "^1.0.5",
+    "eslint-loader": "1.7.1",
+    "eslint-plugin-flowtype": "2.34.0",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-jsx-a11y": "5.0.3",
+    "eslint-plugin-react": "7.1.0",
+    "jest": "^20.0.4",
     "nwb": "0.18.x",
+    "prettier": "^1.5.3",
+    "prop-types": "^15.5.10",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "react-test-renderer": "^15.6.1"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/modules/**/*.{js,jsx}"
+    ],
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js"
+    ],
+    "testMatch": [
+      "<rootDir>/src/modules/**/__tests__/**/*.js?(x)",
+      "<rootDir>/src/modules/**/?(*.)(spec|test).js?(x)"
+    ],
+    "testEnvironment": "node",
+    "testURL": "http://localhost",
+    "transform": {
+      "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+    ],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web"
+    },
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "json",
+      "web.jsx",
+      "jsx"
+    ]
   },
   "author": "Almero Steyn",
   "homepage": "",
@@ -33,5 +81,13 @@
   "repository": "https://github.com/AlmeroSteyn/react-aria-live",
   "keywords": [
     "react-component"
-  ]
+  ],
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  }
 }

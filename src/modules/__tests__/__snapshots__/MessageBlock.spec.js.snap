@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessageBlock should render correctly via snapshot 1`] = `
+<div
+  aria-atomic="true"
+  aria-live="polite"
+  aria-relevant="additions"
+  role="log"
+  style={
+    Object {
+      "border": 0,
+      "clip": "rect(0 0 0 0)",
+      "height": "1px",
+      "margin": "-1px",
+      "overflow": "hidden",
+      "padding": 0,
+      "position": "absolute",
+      "width": "1px",
+    }
+  }
+>
+  Test message
+</div>
+`;
+
+exports[`MessageBlock should render correctly via snapshot for an empty message 1`] = `
+<div
+  aria-atomic="true"
+  aria-live="polite"
+  aria-relevant="additions"
+  role="log"
+  style={
+    Object {
+      "border": 0,
+      "clip": "rect(0 0 0 0)",
+      "height": "1px",
+      "margin": "-1px",
+      "overflow": "hidden",
+      "padding": 0,
+      "position": "absolute",
+      "width": "1px",
+    }
+  }
+/>
+`;

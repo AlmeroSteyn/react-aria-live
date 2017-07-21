@@ -1,14 +1,18 @@
 # react-aria-live
 
-<!-- [![Travis][build-badge]][build] -->
-[![npm package][npm-badge]][npm]
-<!-- [![Coveralls][coveralls-badge]][coveralls] -->
+With this package you can broadcast `aria-live` messages to assistive technology from anywhere in your React applications.
 
-An app-wide aria-live announcer for React applications.
+[ARIA Live Regions](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions) are used to communicate important information to `screen reader software`.
 
-With `react-aria-live` you can communicate crucial messages to screen readers from anywhere in your React application.
+In web applications we make a lot of changes to our pages using JavaScript. These changes can be completely undetected by screen readers, meaning that not all our users are being notified of important changes to our applications.
 
-The double announcer region mechanism was inspired by [ngA11y](https://github.com/dequelabs/ngA11y).
+A very common example in web applications, is the use of routing software. We need to tell screen readers that a new route has been loaded, as this is usually not automatically detected.
+
+Other examples are error situations, or content and state changes in our application that could be very clear visually but not detected by screen readers.
+
+Using `react-aria-live` you can broadcast these important messages easily from any component in your application.
+
+The technical double announcer region implementation of `react-aria-live` was inspired by [ngA11y](https://github.com/dequelabs/ngA11y).
 
 ## Installation
 
@@ -26,10 +30,9 @@ yarn add react-aria-live
 
 The library exports two components, namely `LiveAnnouncer` and `LiveMessage`.
 
-Wrap you React application in the `LiveAnnouncer` component. It will render a visually hidden message area in your application
-that can broadcast `aria-live` messages.
+Wrap you React application in the `LiveAnnouncer` component. It will render a visually hidden message area in your application that can broadcast `aria-live` messages. `LiveAnnouncer` is best placed as high up as possible in your component tree, as `ARIA Live Regions` are sensitive to changes to the HTML rendering these regions. Best results are obtained when the HTML is rendered only once when the application root component is mounted.
 
-Then you can use the `LiveMessage` component to send `polite` or `assertive` messages. Messages are only triggered when the bound `message` prop changes.
+Now you can use the `LiveMessage` component to send `polite` or `assertive` messages. Messages are only triggered when the bound `message` prop changes.
 
 ```
 import React, { Component } from 'react';
@@ -58,13 +61,4 @@ class MyApp extends Component {
 export default MyApp;
 ```
 
-As the library uses context, the `LiveMessage` component can be placed anywhere in the component tree wrapped by `LiveAnnouncer`.
-
-[build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
-[build]: https://travis-ci.org/user/repo
-
-[npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square
-[npm]: https://www.npmjs.org/package/npm-package
-
-[coveralls-badge]: https://img.shields.io/coveralls/user/repo/master.png?style=flat-square
-[coveralls]: https://coveralls.io/github/user/repo
+The `LiveMessage` component does not have to exists in the same component as `LiveAnnouncer`, as long as it exists inside a component tree wrapped by `LiveAnnouncer`.
