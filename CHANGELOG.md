@@ -1,3 +1,7 @@
+## 1.0.3 (July 26, 2017)
+
+* BUGFIX: Clearing the message in LiveMessage now removes the previous message sent to allow for rebroadcast of the same message.
+
 ## 1.0.2 (July 21, 2017)
 
 * Refactored internal component layout.

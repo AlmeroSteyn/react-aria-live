@@ -1,6 +1,6 @@
 {
   "name": "react-aria-live",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Add aria-live messaging to your React app",
   "main": "lib/index.js",
   "module": "es/index.js",

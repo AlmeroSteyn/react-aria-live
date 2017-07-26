@@ -31,14 +31,12 @@ class LiveMessage extends Component {
 
   announce() {
     const { message, 'aria-live': ariaLive } = this.props;
-    if (message) {
       if (ariaLive === 'assertive') {
-        this.context.announceAssertive(message);
+        this.context.announceAssertive(message || '');
       }
       if (ariaLive === 'polite') {
-        this.context.announcePolite(message);
+        this.context.announcePolite(message || '');
       }
-    }
   }
 
   render() {

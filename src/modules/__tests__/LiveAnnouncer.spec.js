@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { mount } from 'enzyme';
 import LiveMessage from '../LiveMessage';
 import LiveAnnouncer from '../LiveAnnouncer';

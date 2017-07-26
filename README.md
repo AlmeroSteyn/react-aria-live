@@ -61,4 +61,4 @@ class MyApp extends Component {
 export default MyApp;
 ```
 
-The `LiveMessage` component does not have to exists in the same component as `LiveAnnouncer`, as long as it exists inside a component tree wrapped by `LiveAnnouncer`.
+The `LiveMessage` component does not have to exist in the same component as `LiveAnnouncer`, as long as it exists inside a component tree wrapped by `LiveAnnouncer`.
