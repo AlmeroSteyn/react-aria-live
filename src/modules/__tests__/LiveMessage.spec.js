@@ -68,4 +68,96 @@ describe('LiveMessage', () => {
     expect(context.announceAssertive).not.toHaveBeenCalled();
     expect(context.announcePolite).toHaveBeenCalledWith('Demo message changed');
   });
+
+  it('should broadcast clearall message if clearOnUmount is set to true', () => {
+    const context = {
+      announcePolite: jest.fn(),
+      announceAssertive: jest.fn(),
+    };
+
+    const wrapper = mount(
+      <LiveMessage message="" aria-live="polite" clearOnUnmount={true} />,
+      {
+        context,
+      }
+    );
+
+    wrapper.unmount();
+
+    expect(context.announceAssertive).toHaveBeenCalledWith('');
+    expect(context.announcePolite).toHaveBeenCalledWith('');
+  });
+
+  it('should broadcast clearall message if clearOnUmount is set to "true"', () => {
+    const context = {
+      announcePolite: jest.fn(),
+      announceAssertive: jest.fn(),
+    };
+
+    const wrapper = mount(
+      <LiveMessage message="" aria-live="polite" clearOnUnmount="true" />,
+      {
+        context,
+      }
+    );
+
+    wrapper.unmount();
+
+    expect(context.announceAssertive).toHaveBeenCalledWith('');
+    expect(context.announcePolite).toHaveBeenCalledWith('');
+  });
+
+  it('should broadcast not clearall message if clearOnUmount is set to "false"', () => {
+    const context = {
+      announcePolite: jest.fn(),
+      announceAssertive: jest.fn(),
+    };
+
+    const wrapper = mount(
+      <LiveMessage message="Demo" aria-live="polite" clearOnUnmount="false" />,
+      {
+        context,
+      }
+    );
+
+    wrapper.unmount();
+
+    expect(context.announceAssertive).not.toHaveBeenCalledWith('');
+    expect(context.announcePolite).not.toHaveBeenCalledWith('');
+  });
+
+  it('should broadcast not clearall message if clearOnUmount is set to false', () => {
+    const context = {
+      announcePolite: jest.fn(),
+      announceAssertive: jest.fn(),
+    };
+
+    const wrapper = mount(
+      <LiveMessage message="Demo" aria-live="polite" clearOnUnmount={false} />,
+      {
+        context,
+      }
+    );
+
+    wrapper.unmount();
+
+    expect(context.announceAssertive).not.toHaveBeenCalledWith('');
+    expect(context.announcePolite).not.toHaveBeenCalledWith('');
+  });
+
+  it('should broadcast not clearall message if clearOnUmount is omitted', () => {
+    const context = {
+      announcePolite: jest.fn(),
+      announceAssertive: jest.fn(),
+    };
+
+    const wrapper = mount(<LiveMessage message="Demo" aria-live="polite" />, {
+      context,
+    });
+
+    wrapper.unmount();
+
+    expect(context.announceAssertive).not.toHaveBeenCalledWith('');
+    expect(context.announcePolite).not.toHaveBeenCalledWith('');
+  });
 });

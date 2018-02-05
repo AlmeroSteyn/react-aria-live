@@ -12,7 +12,7 @@ const offScreenStyle = {
   position: 'absolute',
 };
 
-const MessageBlock = ({ message, 'aria-live': ariaLive }) =>
+const MessageBlock = ({ message, 'aria-live': ariaLive }) => (
   <div
     style={offScreenStyle}
     role="log"
@@ -20,7 +20,8 @@ const MessageBlock = ({ message, 'aria-live': ariaLive }) =>
     aria-relevant="additions"
     aria-atomic="true">
     {message ? message : ''}
-  </div>;
+  </div>
+);
 
 MessageBlock.propTypes = {
   message: PropTypes.string.isRequired,

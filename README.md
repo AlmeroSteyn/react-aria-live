@@ -62,3 +62,9 @@ export default MyApp;
 ```
 
 The `LiveMessage` component does not have to exist in the same component as `LiveAnnouncer`, as long as it exists inside a component tree wrapped by `LiveAnnouncer`.
+
+Setting the optional `clearOnUnmount` prop to `true` will clear the live region text when the `LiveMessage` component is unmounted. This can be handy in cases where you want to repeatedly broadcast the same message:
+
+```
+<LiveMessage message="Some static message" aria-live="polite" clearOnUnmount="true" />
+```

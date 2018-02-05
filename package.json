@@ -1,6 +1,6 @@
 {
   "name": "react-aria-live",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Add aria-live messaging to your React app",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -26,8 +26,9 @@
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
     "babel-preset-react-app": "^3.0.1",
-    "enzyme": "^2.9.1",
-    "enzyme-to-json": "^1.5.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "1.1.1",
+    "enzyme-to-json": "^3.3.0",
     "eslint": "3.19.0",
     "eslint-config-react-app": "^1.0.5",
     "eslint-loader": "1.7.1",
@@ -35,13 +36,13 @@
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-jsx-a11y": "5.0.3",
     "eslint-plugin-react": "7.1.0",
-    "jest": "^20.0.4",
+    "jest": "^22.1.4",
     "nwb": "0.18.x",
-    "prettier": "^1.5.3",
-    "prop-types": "^15.5.10",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-test-renderer": "^15.6.1"
+    "prettier": "^1.10.2",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-test-renderer": "^16.2.0"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -50,6 +51,7 @@
     "setupFiles": [
       "<rootDir>/config/polyfills.js"
     ],
+    "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js",
     "testMatch": [
       "<rootDir>/src/modules/**/__tests__/**/*.js?(x)",
       "<rootDir>/src/modules/**/?(*.)(spec|test).js?(x)"

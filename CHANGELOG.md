@@ -1,3 +1,7 @@
+## 1.0.5 (February 5, 2018)
+
+* Add `clearOnUnmount` prop to toggle clearing live region on unmount of `LiveMessage`. 
+
 ## 1.0.4 (September 11, 2017)
 
 * Peer dependencies now allows for React 16.0.0-rc
