@@ -1,6 +1,6 @@
 {
   "name": "react-aria-live",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Add aria-live messaging to your React app",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -19,30 +19,30 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "react": "15.x || ^16.0.0-rc"
+    "react": "15.x || ^16.x"
   },
   "devDependencies": {
-    "babel-core": "6.25.0",
+    "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
-    "babel-preset-react-app": "^3.0.1",
+    "babel-preset-react-app": "^3.1.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "1.1.1",
     "enzyme-to-json": "^3.3.0",
-    "eslint": "3.19.0",
-    "eslint-config-react-app": "^1.0.5",
-    "eslint-loader": "1.7.1",
-    "eslint-plugin-flowtype": "2.34.0",
-    "eslint-plugin-import": "2.2.0",
-    "eslint-plugin-jsx-a11y": "5.0.3",
-    "eslint-plugin-react": "7.1.0",
+    "eslint": "4.10.0",
+    "eslint-config-react-app": "^2.1.0",
+    "eslint-loader": "1.9.0",
+    "eslint-plugin-flowtype": "2.39.1",
+    "eslint-plugin-import": "2.8.0",
+    "eslint-plugin-jsx-a11y": "5.1.1",
+    "eslint-plugin-react": "7.4.0",
     "jest": "^22.1.4",
-    "nwb": "0.18.x",
-    "prettier": "^1.10.2",
-    "prop-types": "^15.6.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-test-renderer": "^16.2.0"
+    "nwb": "0.21.x",
+    "prettier": "^1.12.1",
+    "prop-types": "^15.6.1",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-test-renderer": "^16.4.0"
   },
   "jest": {
     "collectCoverageFrom": [

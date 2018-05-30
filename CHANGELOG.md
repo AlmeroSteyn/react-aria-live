@@ -1,3 +1,7 @@
+## 1.0.6 (March 30, 2018)
+
+* Remove incorrect and redundant ARIA from live regions.
+
 ## 1.0.5 (February 5, 2018)
 
 * Add `clearOnUnmount` prop to toggle clearing live region on unmount of `LiveMessage`. 

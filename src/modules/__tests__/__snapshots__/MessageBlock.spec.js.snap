@@ -2,9 +2,7 @@
 
 exports[`MessageBlock should render correctly via snapshot 1`] = `
 <div
-  aria-atomic="true"
   aria-live="polite"
-  aria-relevant="additions"
   role="log"
   style={
     Object {
@@ -25,9 +23,7 @@ exports[`MessageBlock should render correctly via snapshot 1`] = `
 
 exports[`MessageBlock should render correctly via snapshot for an empty message 1`] = `
 <div
-  aria-atomic="true"
   aria-live="polite"
-  aria-relevant="additions"
   role="log"
   style={
     Object {
