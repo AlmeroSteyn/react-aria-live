@@ -1,5 +1,7 @@
 # react-aria-live
 
+**Please Note**: As of version 2.0.0 this package no longer supports the old pre React 16.3 context API. If you are still using an older version of React, please use the latest 1.x release of react-aria-live.
+
 With this package you can broadcast `aria-live` messages to assistive technology from anywhere in your React applications.
 
 [ARIA Live Regions](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions) are used to communicate important information to `screen reader software`.
@@ -28,11 +30,12 @@ yarn add react-aria-live
 
 ## Usage
 
-The library exports two components, namely `LiveAnnouncer` and `LiveMessage`.
+The library exports three components, namely `LiveAnnouncer`, `LiveMessage` and `LiveMessenger`.
 
-Wrap your React application in the `LiveAnnouncer` component. It will render a visually hidden message area in your application that can broadcast `aria-live` messages. `LiveAnnouncer` is best placed as high up as possible in your component tree, as `ARIA Live Regions` are sensitive to changes to the HTML rendering these regions. Best results are obtained when the HTML is rendered only once when the application root component is mounted.
+Firstly, wrap your React application in the `LiveAnnouncer` component. It will render a visually hidden message area in your application that can broadcast `aria-live` messages. `LiveAnnouncer` is best placed as high up as possible in your component tree, as `ARIA Live Regions` are sensitive to changes to the HTML rendering these regions. Best results are obtained when the HTML is rendered only once when the application root component is mounted.
 
-Now you can use the `LiveMessage` component to send `polite` or `assertive` messages. Messages are only triggered when the bound `message` prop changes.
+### LiveMessage
+If rendered inside a `LiveAnnouncer`, you can use the `LiveMessage` component to send `polite` or `assertive` messages. Messages are only triggered when the bound `message` prop changes.
 
 ```
 import React, { Component } from 'react';
@@ -68,3 +71,48 @@ Setting the optional `clearOnUnmount` prop to `true` will clear the live region 
 ```
 <LiveMessage message="Some static message" aria-live="polite" clearOnUnmount="true" />
 ```
+
+### LiveMessenger
+
+If rendered inside a `LiveAnnouncer`, you can use the `LiveMessage` component to send `polite` or `assertive` messages using javascript functions called `announcePolite` and `announceAssertive`.
+
+Use this component when you want to avoid a lot of boilerplate code to send screen-reader messages to via the `LiveMessage` component.
+
+This component accepts a render function as `children`. This render function injects the `announcePolite` and `announceAssertive` functions. Each of these functions can be called with a string message you would like to send to the screen-reader. With these functions you are responsible to clear the live regions when necessary. For example, if you want to rebroadcast the same message, you will need to broadcast an empty string first, as the package avoids immediate multiple broadcasts of the same message to avoid verbosity.
+
+```
+import React, { Component, Fragment } from 'react';
+import { LiveAnnouncer, LiveMessenger } from 'react-aria-live';
+
+class MyApp extends Component {
+
+  render() {
+    return (
+      <LiveAnnouncer>
+        <LiveMessenger>
+        {({announcePolite, announceAssertive}) => 
+            <Fragment>
+                <button
+                onClick={() => {
+                   announcePolite('Polite message');
+                  }}>
+                  Press me
+                </button>
+                <button
+                onClick={() => {
+                   announceAssertive('Polite message');
+                  }}>
+                  Press me
+                </button>
+            </Fragment>
+         }
+        </LiveMessenger>
+      </LiveAnnouncer>
+    );
+  }
+}
+
+export default MyApp;
+```
+
+If you want to use these functions in lifecycle hooks, please pass them as props to the component in question.
