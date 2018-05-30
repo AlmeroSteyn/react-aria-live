@@ -1,22 +1,95 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Announcer should render correctly via snapshot 1`] = `
-<div>
-  <MessageBlock
-    aria-live="assertive"
-    message=""
-  />
-  <MessageBlock
-    aria-live="assertive"
-    message=""
-  />
-  <MessageBlock
-    aria-live="polite"
-    message=""
-  />
-  <MessageBlock
-    aria-live="polite"
-    message=""
-  />
-</div>
+<Announcer
+  assertiveMessage=""
+  politeMessage=""
+>
+  <div>
+    <MessageBlock
+      aria-live="assertive"
+      message=""
+    >
+      <div
+        aria-live="assertive"
+        role="log"
+        style={
+          Object {
+            "border": 0,
+            "clip": "rect(0 0 0 0)",
+            "height": "1px",
+            "margin": "-1px",
+            "overflow": "hidden",
+            "padding": 0,
+            "position": "absolute",
+            "width": "1px",
+          }
+        }
+      />
+    </MessageBlock>
+    <MessageBlock
+      aria-live="assertive"
+      message=""
+    >
+      <div
+        aria-live="assertive"
+        role="log"
+        style={
+          Object {
+            "border": 0,
+            "clip": "rect(0 0 0 0)",
+            "height": "1px",
+            "margin": "-1px",
+            "overflow": "hidden",
+            "padding": 0,
+            "position": "absolute",
+            "width": "1px",
+          }
+        }
+      />
+    </MessageBlock>
+    <MessageBlock
+      aria-live="polite"
+      message=""
+    >
+      <div
+        aria-live="polite"
+        role="log"
+        style={
+          Object {
+            "border": 0,
+            "clip": "rect(0 0 0 0)",
+            "height": "1px",
+            "margin": "-1px",
+            "overflow": "hidden",
+            "padding": 0,
+            "position": "absolute",
+            "width": "1px",
+          }
+        }
+      />
+    </MessageBlock>
+    <MessageBlock
+      aria-live="polite"
+      message=""
+    >
+      <div
+        aria-live="polite"
+        role="log"
+        style={
+          Object {
+            "border": 0,
+            "clip": "rect(0 0 0 0)",
+            "height": "1px",
+            "margin": "-1px",
+            "overflow": "hidden",
+            "padding": 0,
+            "position": "absolute",
+            "width": "1px",
+          }
+        }
+      />
+    </MessageBlock>
+  </div>
+</Announcer>
 `;

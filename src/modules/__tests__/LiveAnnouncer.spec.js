@@ -11,10 +11,8 @@ describe('LiveAnnouncer', () => {
       </LiveAnnouncer>
     );
 
-    expect(wrapper.state()).toEqual({
-      announceAssertiveMessage: '',
-      announcePoliteMessage: 'Demo message',
-    });
+    expect(wrapper.state().announceAssertiveMessage).toBe('');
+    expect(wrapper.state().announcePoliteMessage).toBe('Demo message');
   });
 
   it('should set assertive messages', () => {
@@ -24,9 +22,7 @@ describe('LiveAnnouncer', () => {
       </LiveAnnouncer>
     );
 
-    expect(wrapper.state()).toEqual({
-      announceAssertiveMessage: 'Demo message',
-      announcePoliteMessage: '',
-    });
+    expect(wrapper.state().announceAssertiveMessage).toBe('Demo message');
+    expect(wrapper.state().announcePoliteMessage).toBe('');
   });
 });

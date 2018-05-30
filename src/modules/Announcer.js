@@ -8,38 +8,40 @@ class Announcer extends Component {
     assertiveMessage2: '',
     politeMessage1: '',
     politeMessage2: '',
+    oldPolitemessage: '',
+    oldAssertiveMessage: '',
+    setAlternatePolite: false,
+    setAlternateAssertive: false,
   };
-
-  setAlternatePolite = false;
-  setAlternateAssertive = false;
 
   static propTypes = {
     politeMessage: PropTypes.string,
     assertiveMessage: PropTypes.string,
   };
 
-  componentWillReceiveProps(nextProps) {
-    const {
-      politeMessage: oldPolitemessage,
-      assertiveMessage: oldAssertiveMessage,
-    } = this.props;
+  static getDerivedStateFromProps(nextProps, state) {
+    const { oldPolitemessage, oldAssertiveMessage } = state;
     const { politeMessage, assertiveMessage } = nextProps;
 
     if (oldPolitemessage !== politeMessage) {
-      this.setState({
-        politeMessage1: this.setAlternatePolite ? '' : politeMessage,
-        politeMessage2: this.setAlternatePolite ? politeMessage : '',
-      });
-      this.setAlternatePolite = !this.setAlternatePolite;
+      return {
+        politeMessage1: state.setAlternatePolite ? '' : politeMessage,
+        politeMessage2: state.setAlternatePolite ? politeMessage : '',
+        oldPolitemessage: politeMessage,
+        setAlternatePolite: !state.setAlternatePolite,
+      };
     }
 
     if (oldAssertiveMessage !== assertiveMessage) {
-      this.setState({
-        assertiveMessage1: this.setAlternateAssertive ? '' : assertiveMessage,
-        assertiveMessage2: this.setAlternateAssertive ? assertiveMessage : '',
-      });
-      this.setAlternateAssertive = !this.setAlternateAssertive;
+      return {
+        assertiveMessage1: state.setAlternateAssertive ? '' : assertiveMessage,
+        assertiveMessage2: state.setAlternateAssertive ? assertiveMessage : '',
+        oldAssertiveMessage: assertiveMessage,
+        setAlternateAssertive: !state.setAlternateAssertive,
+      };
     }
+
+    return null;
   }
 
   render() {

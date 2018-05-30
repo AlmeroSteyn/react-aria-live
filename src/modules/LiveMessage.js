@@ -1,59 +1,21 @@
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Component } from 'react';
+import AnnouncerContext from './AnnouncerContext';
+import AnnouncerMessage from './AnnouncerMessage';
 
-class LiveMessage extends Component {
-  static propTypes = {
-    message: PropTypes.string.isRequired,
-    'aria-live': PropTypes.string.isRequired,
-    clearOnUnmount: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.oneOf(['true', 'false']),
-    ]),
-  };
+const LiveMessage = props => (
+  <AnnouncerContext.Consumer>
+    {contextProps => <AnnouncerMessage {...contextProps} {...props} />}
+  </AnnouncerContext.Consumer>
+);
 
-  static contextTypes = {
-    announcePolite: PropTypes.func.isRequired,
-    announceAssertive: PropTypes.func.isRequired,
-  };
-
-  constructor(props) {
-    super(props);
-
-    this.announce = this.announce.bind(this);
-  }
-
-  componentDidMount() {
-    this.announce();
-  }
-
-  componentDidUpdate(prevProps) {
-    const { message } = this.props;
-    if (message !== prevProps.message) {
-      this.announce();
-    }
-  }
-
-  componentWillUnmount() {
-    const { clearOnUnmount } = this.props;
-    if (clearOnUnmount === true || clearOnUnmount === 'true') {
-      this.context.announceAssertive('');
-      this.context.announcePolite('');
-    }
-  }
-
-  announce() {
-    const { message, 'aria-live': ariaLive } = this.props;
-    if (ariaLive === 'assertive') {
-      this.context.announceAssertive(message || '');
-    }
-    if (ariaLive === 'polite') {
-      this.context.announcePolite(message || '');
-    }
-  }
-
-  render() {
-    return null;
-  }
-}
+LiveMessage.propTypes = {
+  message: PropTypes.string.isRequired,
+  'aria-live': PropTypes.string.isRequired,
+  clearOnUnmount: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.oneOf(['true', 'false']),
+  ]),
+};
 
 export default LiveMessage;

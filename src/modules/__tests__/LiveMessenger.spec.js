@@ -1,15 +1,25 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import LiveMessage from '../LiveMessage';
+import LiveMessenger from '../LiveMessenger';
 import LiveAnnouncer from '../LiveAnnouncer';
 
 describe('LiveMessage', () => {
   it('should announce assertive messages', () => {
     const wrapper = mount(
       <LiveAnnouncer>
-        <LiveMessage message="Demo message" aria-live="assertive" />
+        <LiveMessenger>
+          {({ announceAssertive }) => (
+            <button
+              onClick={() => {
+                announceAssertive('Demo message');
+              }}
+            />
+          )}
+        </LiveMessenger>
       </LiveAnnouncer>
     );
+
+    wrapper.find('button').simulate('click');
 
     expect(
       wrapper
@@ -40,9 +50,19 @@ describe('LiveMessage', () => {
   it('should announce polite messages', () => {
     const wrapper = mount(
       <LiveAnnouncer>
-        <LiveMessage message="Demo message" aria-live="polite" />
+        <LiveMessenger>
+          {({ announcePolite }) => (
+            <button
+              onClick={() => {
+                announcePolite('Demo message');
+              }}
+            />
+          )}
+        </LiveMessenger>
       </LiveAnnouncer>
     );
+
+    wrapper.find('button').simulate('click');
 
     expect(
       wrapper
