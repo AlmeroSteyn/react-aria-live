@@ -34,6 +34,8 @@ The library exports three components, namely `LiveAnnouncer`, `LiveMessage` and 
 
 Firstly, wrap your React application in the `LiveAnnouncer` component. It will render a visually hidden message area in your application that can broadcast `aria-live` messages. `LiveAnnouncer` is best placed as high up as possible in your component tree, as `ARIA Live Regions` are sensitive to changes to the HTML rendering these regions. Best results are obtained when the HTML is rendered only once when the application root component is mounted.
 
+**Please note**: `react-aria-live` only broadcasts a message if the string value changes from the previous broadcast. This is done to keep verbosity down and avoid accidental duplication. If you want to rebroadcast the same message, please clear the live region with an empty string value first. The `LiveMessage` component accepts a `clearOnUnmount` prop to assist with this when unmounting the component. More about this in the `LiveMessage` section. 
+
 ### LiveMessage
 If rendered inside a `LiveAnnouncer`, you can use the `LiveMessage` component to send `polite` or `assertive` messages. Messages are only triggered when the bound `message` prop changes.
 
@@ -78,7 +80,7 @@ If rendered inside a `LiveAnnouncer`, you can use the `LiveMessage` component to
 
 Use this component when you want to avoid a lot of boilerplate code to send screen-reader messages to via the `LiveMessage` component.
 
-This component accepts a render function as `children`. This render function injects the `announcePolite` and `announceAssertive` functions. Each of these functions can be called with a string message you would like to send to the screen-reader. With these functions you are responsible to clear the live regions when necessary. For example, if you want to rebroadcast the same message, you will need to broadcast an empty string first, as the package avoids immediate multiple broadcasts of the same message to avoid verbosity.
+This component accepts a render function as `children`. This render function injects the `announcePolite` and `announceAssertive` functions. Each of these functions can be called with a string message you would like to send to the screen-reader. 
 
 ```
 import React, { Component, Fragment } from 'react';
@@ -96,13 +98,13 @@ class MyApp extends Component {
                 onClick={() => {
                    announcePolite('Polite message');
                   }}>
-                  Press me
+                  Press me for a polite message
                 </button>
                 <button
                 onClick={() => {
-                   announceAssertive('Polite message');
+                   announceAssertive('Assertive message');
                   }}>
-                  Press me
+                  Press me for an assertive message
                 </button>
             </Fragment>
          }
