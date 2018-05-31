@@ -1,6 +1,6 @@
 {
   "name": "react-aria-live",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Add aria-live messaging to your React app",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -19,7 +19,7 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "react": "15.x || ^16.3.x"
+    "react": "^16.3.x"
   },
   "devDependencies": {
     "babel-core": "6.26.0",

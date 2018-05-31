@@ -1,10 +1,14 @@
-## 2.0.0 (March 30, 2018)
+## 2.0.1 (May 31, 2018)
+
+* Fixed peer dependencies.
+
+## 2.0.0 (May 30, 2018)
 
 * Rewrite of package using the new React Context API.
 * Removal of the old context API.
 * Introduction of new LiveMessenger component to allow direct access to raw functions. 
 
-## 1.0.6 (March 30, 2018)
+## 1.0.6 (May 30, 2018)
 
 * Remove incorrect and redundant ARIA from live regions.
 
