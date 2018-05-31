@@ -9,7 +9,9 @@ class Announcer extends Component {
     politeMessage1: '',
     politeMessage2: '',
     oldPolitemessage: '',
+    oldPoliteMessageId: '',
     oldAssertiveMessage: '',
+    oldAssertiveMessageId: '',
     setAlternatePolite: false,
     setAlternateAssertive: false,
   };
@@ -20,23 +22,41 @@ class Announcer extends Component {
   };
 
   static getDerivedStateFromProps(nextProps, state) {
-    const { oldPolitemessage, oldAssertiveMessage } = state;
-    const { politeMessage, assertiveMessage } = nextProps;
+    const {
+      oldPolitemessage,
+      oldPoliteMessageId,
+      oldAssertiveMessage,
+      oldAssertiveMessageId,
+    } = state;
+    const {
+      politeMessage,
+      politeMessageId,
+      assertiveMessage,
+      assertiveMessageId,
+    } = nextProps;
 
-    if (oldPolitemessage !== politeMessage) {
+    if (
+      oldPolitemessage !== politeMessage ||
+      oldPoliteMessageId !== politeMessageId
+    ) {
       return {
         politeMessage1: state.setAlternatePolite ? '' : politeMessage,
         politeMessage2: state.setAlternatePolite ? politeMessage : '',
         oldPolitemessage: politeMessage,
+        oldPoliteMessageId: politeMessageId,
         setAlternatePolite: !state.setAlternatePolite,
       };
     }
 
-    if (oldAssertiveMessage !== assertiveMessage) {
+    if (
+      oldAssertiveMessage !== assertiveMessage ||
+      oldAssertiveMessageId !== assertiveMessageId
+    ) {
       return {
         assertiveMessage1: state.setAlternateAssertive ? '' : assertiveMessage,
         assertiveMessage2: state.setAlternateAssertive ? assertiveMessage : '',
         oldAssertiveMessage: assertiveMessage,
+        oldAssertiveMessageId: assertiveMessageId,
         setAlternateAssertive: !state.setAlternateAssertive,
       };
     }

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { Component } from 'react';
+import uuidv4 from 'uuid/v4';
 
 class AnnouncerMessage extends Component {
   static propTypes = {
@@ -40,10 +41,10 @@ class AnnouncerMessage extends Component {
       announcePolite,
     } = this.props;
     if (ariaLive === 'assertive') {
-      announceAssertive(message || '');
+      announceAssertive(message || '', uuidv4());
     }
     if (ariaLive === 'polite') {
-      announcePolite(message || '');
+      announcePolite(message || '', uuidv4());
     }
   };
 

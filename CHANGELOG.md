@@ -1,3 +1,7 @@
+## 2.0.2 (May 31, 2018)
+
+* Enable easier rebroadcast of messages when required. 
+
 ## 2.0.1 (May 31, 2018)
 
 * Fixed peer dependencies.

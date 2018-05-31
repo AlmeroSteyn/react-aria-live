@@ -1,5 +1,6 @@
 import React, { Component, Fragment, StrictMode } from 'react';
 import { render } from 'react-dom';
+import uuidv4 from 'uuid/v4';
 
 import LiveAnnouncer from '../../src/modules/LiveAnnouncer';
 import LiveMessage from '../../src/modules/LiveMessage';
@@ -18,6 +19,7 @@ class Demo extends Component {
 
     this.onAssertiveClickHandler = this.onAssertiveClickHandler.bind(this);
     this.onPoliteClickHandler = this.onPoliteClickHandler.bind(this);
+    this.getUniqueId = this.getUniqueId.bind(this);
   }
 
   onPoliteClickHandler() {
@@ -54,6 +56,10 @@ class Demo extends Component {
     this.setState({ politeRawClicked: !this.state.politeRawClicked });
   }
 
+  getUniqueId() {
+    return uuidv4();
+  }
+
   render() {
     return (
       <StrictMode>
@@ -86,6 +92,13 @@ class Demo extends Component {
                       this.onPoliteRawClickHandler(announcePolite);
                     }}>
                     Click for polite message via raw function
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      announcePolite('This is a message I want to hear again and again', this.getUniqueId());
+                    }}>
+                    Rebroadcast the same message
                   </button>
                 </Fragment>
               )}

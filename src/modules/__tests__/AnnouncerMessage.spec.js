@@ -2,9 +2,17 @@ import React from 'react';
 import { mount } from 'enzyme';
 import AnnouncerMessage from '../AnnouncerMessage';
 
+const guidRegex = /^(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}$/;
+
 describe('LiveMessage', () => {
   it('should announce assertive messages on mount', () => {
-    const announceAssertiveSpy = jest.fn();
+    let param1 = '';
+    let param2 = '';
+
+    const announceAssertiveSpy = jest.fn((message, id) => {
+      param1 = message;
+      param2 = id;
+    });
     const announcePoliteSpy = jest.fn();
 
     mount(
@@ -16,7 +24,9 @@ describe('LiveMessage', () => {
       />
     );
 
-    expect(announceAssertiveSpy).toHaveBeenCalledWith('Demo message');
+    expect(param1).toBe('Demo message');
+    expect(param2.match(guidRegex)).not.toBeNull();
+    expect(announceAssertiveSpy).toHaveBeenCalled();
     expect(announcePoliteSpy).not.toHaveBeenCalled();
   });
 
@@ -33,12 +43,18 @@ describe('LiveMessage', () => {
       />
     );
 
-    expect(announceAssertiveSpy).toHaveBeenCalledWith('');
+    expect(announceAssertiveSpy).toHaveBeenCalled();
     expect(announcePoliteSpy).not.toHaveBeenCalled();
   });
 
   it('should announce assertive messages on update', () => {
-    const announceAssertiveSpy = jest.fn();
+    let param1 = '';
+    let param2 = '';
+
+    const announceAssertiveSpy = jest.fn((message, id) => {
+      param1 = message;
+      param2 = id;
+    });
     const announcePoliteSpy = jest.fn();
 
     const wrapper = mount(
@@ -54,13 +70,21 @@ describe('LiveMessage', () => {
 
     wrapper.update();
 
+    expect(param1).toBe('Demo message changed');
+    expect(param2.match(guidRegex)).not.toBeNull();
     expect(announcePoliteSpy).not.toHaveBeenCalled();
-    expect(announceAssertiveSpy).toHaveBeenCalledWith('Demo message changed');
+    expect(announceAssertiveSpy).toHaveBeenCalled();
   });
 
   it('should announce polite messages on mount', () => {
+    let param1 = '';
+    let param2 = '';
+
+    const announcePoliteSpy = jest.fn((message, id) => {
+      param1 = message;
+      param2 = id;
+    });
     const announceAssertiveSpy = jest.fn();
-    const announcePoliteSpy = jest.fn();
 
     mount(
       <AnnouncerMessage
@@ -71,8 +95,10 @@ describe('LiveMessage', () => {
       />
     );
 
+    expect(param1).toBe('Demo message');
+    expect(param2.match(guidRegex)).not.toBeNull();
     expect(announceAssertiveSpy).not.toHaveBeenCalled();
-    expect(announcePoliteSpy).toHaveBeenCalledWith('Demo message');
+    expect(announcePoliteSpy).toHaveBeenCalled();
   });
 
   it('should mount successfully for an empty polite message', () => {
@@ -89,12 +115,18 @@ describe('LiveMessage', () => {
     );
 
     expect(announceAssertiveSpy).not.toHaveBeenCalled();
-    expect(announcePoliteSpy).toHaveBeenCalledWith('');
+    expect(announcePoliteSpy).toHaveBeenCalled();
   });
 
   it('should announce polite messages on update', () => {
+    let param1 = '';
+    let param2 = '';
+
+    const announcePoliteSpy = jest.fn((message, id) => {
+      param1 = message;
+      param2 = id;
+    });
     const announceAssertiveSpy = jest.fn();
-    const announcePoliteSpy = jest.fn();
 
     const wrapper = mount(
       <AnnouncerMessage
@@ -109,8 +141,10 @@ describe('LiveMessage', () => {
 
     wrapper.update();
 
+    expect(param1).toBe('Demo message changed');
+    expect(param2.match(guidRegex)).not.toBeNull();
+    expect(announcePoliteSpy).toHaveBeenCalled();
     expect(announceAssertiveSpy).not.toHaveBeenCalled();
-    expect(announcePoliteSpy).toHaveBeenCalledWith('Demo message changed');
   });
 
   it('should broadcast clearall message if clearOnUmount is set to true', () => {

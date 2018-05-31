@@ -1,6 +1,6 @@
 {
   "name": "react-aria-live",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Add aria-live messaging to your React app",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -17,7 +17,9 @@
     "test": "node scripts/test.js --env=jsdom",
     "format": "prettier --write --single-quote --tab-width=2 --trailing-comma=es5 --jsx-bracket-same-line src/**/*.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "uuid": "^3.2.1"
+  },
   "peerDependencies": {
     "react": "^16.3.x"
   },
