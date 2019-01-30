@@ -4,6 +4,7 @@
   "description": "Add aria-live messaging to your React app",
   "main": "lib/index.js",
   "module": "es/index.js",
+  "typings": "typings/index.d.ts",
   "files": [
     "css",
     "es",
@@ -24,6 +25,7 @@
     "react": "^16.3.x"
   },
   "devDependencies": {
+    "@types/react": "^16.4.0",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
