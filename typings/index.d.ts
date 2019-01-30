@@ -8,7 +8,7 @@ export interface LiveAnnouncerContextProps {
 export interface LiveMessageProps {
   message: string;
   ['aria-live']: string;
-  clearOnUnmount?: boolean | "true" | "false";
+  clearOnUnmount?: boolean | 'true' | 'false';
 }
 
 export class LiveAnnouncer extends React.Component { }
