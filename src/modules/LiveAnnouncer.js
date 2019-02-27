@@ -41,13 +41,13 @@ class LiveAnnouncer extends Component {
     } = this.state;
     return (
       <AnnouncerContext.Provider value={updateFunctions}>
+        {this.props.children}
         <Announcer
           assertiveMessage={announceAssertiveMessage}
           assertiveMessageId={assertiveMessageId}
           politeMessage={announcePoliteMessage}
           politeMessageId={politeMessageId}
         />
-        {this.props.children}
       </AnnouncerContext.Provider>
     );
   }
