@@ -6,7 +6,9 @@ const AnnouncerContext = React.createContext({
 });
 
 function logContextWarning() {
-    console.warn('Announcement failed, LiveAnnouncer context is missing');
+    if (process.env.NODE_ENV === 'development') {
+        console.warn('Announcement failed, LiveAnnouncer is missing from the component tree');
+    }
 }
 
 export default AnnouncerContext;
