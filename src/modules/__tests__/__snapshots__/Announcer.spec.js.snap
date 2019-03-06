@@ -93,3 +93,26 @@ exports[`Announcer should render correctly via snapshot 1`] = `
   </div>
 </Announcer>
 `;
+
+exports[`Announcer should set props 1`] = `
+<div
+  id="my-announcer"
+>
+  <MessageBlock
+    aria-live="assertive"
+    message=""
+  />
+  <MessageBlock
+    aria-live="assertive"
+    message=""
+  />
+  <MessageBlock
+    aria-live="polite"
+    message="I am a message"
+  />
+  <MessageBlock
+    aria-live="polite"
+    message=""
+  />
+</div>
+`;

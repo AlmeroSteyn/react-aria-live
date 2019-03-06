@@ -1,6 +1,6 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { mountToJson } from 'enzyme-to-json';
+import { mount, shallow } from 'enzyme';
+import { mountToJson, shallowToJson } from 'enzyme-to-json';
 import Announcer from '../Announcer';
 
 describe('Announcer', () => {
@@ -67,5 +67,18 @@ describe('Announcer', () => {
     expect(wrapper.find('MessageBlock').get(3).props.message).toEqual(
       'I am a changed message'
     );
+  });
+
+  it('should set props', () => {
+    const wrapper = shallow(
+      <Announcer
+        assertiveMessage=""
+        politeMessage="I am a message"
+        id="my-announcer"
+      />
+    );
+
+    const tree = shallowToJson(wrapper);
+    expect(tree).toMatchSnapshot();
   });
 });

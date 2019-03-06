@@ -66,13 +66,20 @@ class Announcer extends Component {
 
   render() {
     const {
+      politeMessage,
+      politeMessageId,
+      assertiveMessage,
+      assertiveMessageId,
+      ...rest,
+    } = this.props;
+    const {
       assertiveMessage1,
       assertiveMessage2,
       politeMessage1,
       politeMessage2,
     } = this.state;
     return (
-      <div>
+      <div {...rest}>
         <MessageBlock aria-live="assertive" message={assertiveMessage1} />
         <MessageBlock aria-live="assertive" message={assertiveMessage2} />
         <MessageBlock aria-live="polite" message={politeMessage1} />
