@@ -1,3 +1,7 @@
+## 2.0.3 (Feb 27, 2019)
+
+Move live region container to bottom of the announcer to reduce accidental navigation risk.
+
 ## 2.0.2 (May 31, 2018)
 
 * Enable easier rebroadcast of messages when required. 

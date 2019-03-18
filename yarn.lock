@@ -1290,9 +1290,10 @@ babel-preset-jest@^22.1.0:
     babel-plugin-jest-hoist "^22.1.0"
     babel-plugin-syntax-object-rest-spread "^6.13.0"
 
-babel-preset-react-app@^3.1.1:
+babel-preset-react-app@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/babel-preset-react-app/-/babel-preset-react-app-3.1.1.tgz#d3f06a79742f0e89d7afcb72e282d9809c850920"
+  integrity sha512-9fRHopNaGL5ScRZdPSoyxRaABKmkS2fx0HUJ5Yphan5G8QDFD7lETsPyY7El6b7YPT3sNrw9gfrWzl4/LsJcfA==
   dependencies:
     babel-plugin-dynamic-import-node "1.1.0"
     babel-plugin-syntax-dynamic-import "6.18.0"
@@ -3246,15 +3247,17 @@ enzyme-context-patch@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/enzyme-context-patch/-/enzyme-context-patch-0.0.7.tgz#24559e8ed25e83ced33bfc72fe7e1678a5d90a28"
 
-enzyme-to-json@^3.3.0:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/enzyme-to-json/-/enzyme-to-json-3.3.1.tgz#64239dcd417e2fb552f4baa6632de4744b9b5b93"
+enzyme-to-json@3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/enzyme-to-json/-/enzyme-to-json-3.3.0.tgz#553e23a09ffb4b0cf09287e2edf9c6539fddaa84"
+  integrity sha512-d8IfzVpwunct+bw6uWujjHKtskyLwWGKkAguouAdTMNTaTmoC0Y0N0mWpeOq+bFDM4YljRXmBRIsO6QNWrlZzA==
   dependencies:
     lodash "^4.17.4"
 
-enzyme@^3.3.0:
+enzyme@3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/enzyme/-/enzyme-3.3.0.tgz#0971abd167f2d4bf3f5bd508229e1c4b6dc50479"
+  integrity sha512-l8csyPyLmtxskTz6pX9W8eDOyH1ckEtDttXk/vlFWCjv00SkjTjtoUrogqp4yEvMyneU9dUJoOLnqFoiHb8IHA==
   dependencies:
     cheerio "^1.0.0-rc.2"
     function.prototype.name "^1.0.3"
@@ -3414,9 +3417,10 @@ escodegen@^1.9.0:
   optionalDependencies:
     source-map "~0.5.6"
 
-eslint-config-react-app@^2.1.0:
+eslint-config-react-app@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/eslint-config-react-app/-/eslint-config-react-app-2.1.0.tgz#23c909f71cbaff76b945b831d2d814b8bde169eb"
+  integrity sha512-8QZrKWuHVC57Fmu+SsKAVxnI9LycZl7NFQ4H9L+oeISuCXhYdXqsOOIVSjQFW6JF5MXZLFE+21Syhd7mF1IRZQ==
 
 eslint-import-resolver-node@^0.3.1:
   version "0.3.2"
@@ -5592,9 +5596,10 @@ jest-worker@^22.1.0:
   dependencies:
     merge-stream "^1.0.1"
 
-jest@^22.1.4:
+jest@22.1.4:
   version "22.1.4"
   resolved "https://registry.yarnpkg.com/jest/-/jest-22.1.4.tgz#9ec71373a38f40ff92a3e5e96ae85687c181bb72"
+  integrity sha512-cIPkn+OFGabazPesbhnYkadPftoO2Fo3w84QjeIP+A8eZ5qj7Zs4PuTemAW8StNMxySJr0KPk/LhYG2GUHLexQ==
   dependencies:
     jest-cli "^22.1.4"
 
@@ -7727,9 +7732,10 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier@^1.12.1:
+prettier@1.12.1:
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.12.1.tgz#c1ad20e803e7749faf905a409d2367e06bbe7325"
+  integrity sha1-wa0g6APndJ+vkFpAnSNn4Gu+cyU=
 
 pretty-error@^2.0.2:
   version "2.1.1"
@@ -7793,7 +7799,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.6.1:
+prop-types@15.6.1, prop-types@^15.5.10:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
   dependencies:
@@ -8021,9 +8027,10 @@ react-deep-force-update@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.0.1.tgz#f911b5be1d2a6fe387507dd6e9a767aa2924b4c7"
 
-react-dom@^16.4.0:
+react-dom@16.4.0:
   version "16.4.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.4.0.tgz#099f067dd5827ce36a29eaf9a6cdc7cbf6216b1e"
+  integrity sha512-bbLd+HYpBEnYoNyxDe9XpSG2t9wypMohwQPvKw8Hov3nF7SJiJIgK56b46zHpBUpHb06a1iEuw7G3rbrsnNL6w==
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
@@ -8031,8 +8038,9 @@ react-dom@^16.4.0:
     prop-types "^15.6.0"
 
 react-is@^16.4.0:
-  version "16.4.0"
-  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.0.tgz#cc9fdc855ac34d2e7d9d2eb7059bbc240d35ffcf"
+  version "16.8.3"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.3.tgz#4ad8b029c2a718fc0cfc746c8d4e1b7221e5387d"
+  integrity sha512-Y4rC1ZJmsxxkkPuMLwvKvlL1Zfpbcu+Bf4ZigkHup3v9EfdYhAlWAaVyA19olXq2o2mGn0w+dFKvk3pVVlYcIA==
 
 react-is@^16.7.0, react-is@^16.8.1:
   version "16.8.4"
@@ -8045,6 +8053,25 @@ react-proxy@^1.1.7:
     lodash "^4.6.1"
     react-deep-force-update "^1.0.0"
 
+react-reconciler@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.7.0.tgz#9614894103e5f138deeeb5eabaf3ee80eb1d026d"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+
+react-test-renderer@16.4.0:
+  version "16.4.0"
+  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.4.0.tgz#0dbe0e24263e94e1830c7afb1f403707fad313a3"
+  integrity sha512-Seh1t9xFY6TKiV/hRlPzUkqX1xHOiKIMsctfU0cggo1ajsLjoIJFL520LlrxV+4/VIj+clrCeH6s/aVv/vTStg==
+  dependencies:
+    fbjs "^0.8.16"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+    react-is "^16.4.0"
+
 react-test-renderer@^16.0.0-0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.2.0.tgz#bddf259a6b8fcd8555f012afc8eacc238872a211"
@@ -8052,15 +8079,6 @@ react-test-renderer@^16.0.0-0:
     fbjs "^0.8.16"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
-
-react-test-renderer@^16.4.0:
-  version "16.4.0"
-  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.4.0.tgz#0dbe0e24263e94e1830c7afb1f403707fad313a3"
-  dependencies:
-    fbjs "^0.8.16"
-    object-assign "^4.1.1"
-    prop-types "^15.6.0"
-    react-is "^16.4.0"
 
 react-transform-catch-errors@1.0.2:
   version "1.0.2"
@@ -8073,9 +8091,10 @@ react-transform-hmr@1.0.4:
     global "^4.3.0"
     react-proxy "^1.1.7"
 
-react@^16.4.0:
+react@16.4.0:
   version "16.4.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.4.0.tgz#402c2db83335336fba1962c08b98c6272617d585"
+  integrity sha512-K0UrkLXSAekf5nJu89obKUM7o2vc6MMN9LYoKnCa+c+8MJRAT120xzPLENcWSRc7GYKIg0LlgJRDorrufdglQQ==
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
