@@ -92,15 +92,15 @@ describe('LiveMessage', () => {
 
   it('should pass dummy functions without LiveAnnouncer', () => {
     mount(
-        <LiveMessenger>
-          {context => {
-            expect(context).toBeDefined();
-            expect(context).toHaveProperty('announceAssertive');
-            expect(typeof context.announceAssertive).toBe('function');
-            expect(context).toHaveProperty('announcePolite');
-            expect(typeof context.announcePolite).toBe('function');
-          }}
-        </LiveMessenger>
+      <LiveMessenger>
+        {context => {
+          expect(context).toBeDefined();
+          expect(context).toHaveProperty('announceAssertive');
+          expect(typeof context.announceAssertive).toBe('function');
+          expect(context).toHaveProperty('announcePolite');
+          expect(typeof context.announcePolite).toBe('function');
+        }}
+      </LiveMessenger>
     );
   });
 });

@@ -1,3 +1,7 @@
+## 2.0.4 (Mar 18, 2019)
+
+Log a warning if the context is missing ([Jeremy Einfeld](https://github.com/JeremyEinfeld))
+
 ## 2.0.3 (Feb 27, 2019)
 
 Move live region container to bottom of the announcer to reduce accidental navigation risk.

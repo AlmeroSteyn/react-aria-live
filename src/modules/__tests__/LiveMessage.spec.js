@@ -38,11 +38,13 @@ describe('LiveMessage', () => {
   });
 
   it('should fail gracefully for assertive messages without LiveAnnouncer', () => {
-    const warn = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const warn = jest
+      .spyOn(console, 'warn')
+      .mockImplementation(() => undefined);
 
-    expect(() => mount(
-        <LiveMessage message="Demo message" aria-live="assertive" />
-    )).not.toThrow();
+    expect(() =>
+      mount(<LiveMessage message="Demo message" aria-live="assertive" />)
+    ).not.toThrow();
 
     expect(warn).toHaveBeenCalled();
   });
@@ -81,16 +83,18 @@ describe('LiveMessage', () => {
   });
 
   it('should fail gracefully for polite messages without LiveAnnouncer', () => {
-    const warn = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const warn = jest
+      .spyOn(console, 'warn')
+      .mockImplementation(() => undefined);
 
-    expect(() => mount(
-        <LiveMessage message="Demo message" aria-live="polite" />
-    )).not.toThrow();
+    expect(() =>
+      mount(<LiveMessage message="Demo message" aria-live="polite" />)
+    ).not.toThrow();
 
     expect(warn).toHaveBeenCalled();
   });
 
   afterEach(() => {
-    jest.restoreAllMocks()
+    jest.restoreAllMocks();
   });
 });
