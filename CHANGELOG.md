@@ -1,3 +1,7 @@
+## 2.0.5 (Apr 10, 2019)
+
+Add nowrap style to hidden regions to hotfix issue [https://github.com/nvaccess/nvda/issues/5448](https://github.com/nvaccess/nvda/issues/5448)
+
 ## 2.0.4 (Mar 18, 2019)
 
 Log a warning if the context is missing ([Jeremy Einfeld](https://github.com/JeremyEinfeld))
@@ -8,7 +12,7 @@ Move live region container to bottom of the announcer to reduce accidental navig
 
 ## 2.0.2 (May 31, 2018)
 
-* Enable easier rebroadcast of messages when required. 
+* Enable easier rebroadcast of messages when required.
 
 ## 2.0.1 (May 31, 2018)
 
@@ -18,7 +22,7 @@ Move live region container to bottom of the announcer to reduce accidental navig
 
 * Rewrite of package using the new React Context API.
 * Removal of the old context API.
-* Introduction of new LiveMessenger component to allow direct access to raw functions. 
+* Introduction of new LiveMessenger component to allow direct access to raw functions.
 
 ## 1.0.6 (May 30, 2018)
 
@@ -26,7 +30,7 @@ Move live region container to bottom of the announcer to reduce accidental navig
 
 ## 1.0.5 (February 5, 2018)
 
-* Add `clearOnUnmount` prop to toggle clearing live region on unmount of `LiveMessage`. 
+* Add `clearOnUnmount` prop to toggle clearing live region on unmount of `LiveMessage`.
 
 ## 1.0.4 (September 11, 2017)
 
@@ -49,4 +53,3 @@ Move live region container to bottom of the announcer to reduce accidental navig
 ## 1.0.0
 
 * Initial creation
-

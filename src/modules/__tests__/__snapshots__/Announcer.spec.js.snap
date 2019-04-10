@@ -22,6 +22,7 @@ exports[`Announcer should render correctly via snapshot 1`] = `
             "overflow": "hidden",
             "padding": 0,
             "position": "absolute",
+            "whiteSpace": "nowrap",
             "width": "1px",
           }
         }
@@ -43,6 +44,7 @@ exports[`Announcer should render correctly via snapshot 1`] = `
             "overflow": "hidden",
             "padding": 0,
             "position": "absolute",
+            "whiteSpace": "nowrap",
             "width": "1px",
           }
         }
@@ -64,6 +66,7 @@ exports[`Announcer should render correctly via snapshot 1`] = `
             "overflow": "hidden",
             "padding": 0,
             "position": "absolute",
+            "whiteSpace": "nowrap",
             "width": "1px",
           }
         }
@@ -85,6 +88,7 @@ exports[`Announcer should render correctly via snapshot 1`] = `
             "overflow": "hidden",
             "padding": 0,
             "position": "absolute",
+            "whiteSpace": "nowrap",
             "width": "1px",
           }
         }
