@@ -7,6 +7,7 @@ const offScreenStyle = {
   height: '1px',
   margin: '-1px',
   overflow: 'hidden',
+  whiteSpace: 'nowrap',
   padding: 0,
   width: '1px',
   position: 'absolute',

@@ -13,6 +13,7 @@ exports[`MessageBlock should render correctly via snapshot 1`] = `
       "overflow": "hidden",
       "padding": 0,
       "position": "absolute",
+      "whiteSpace": "nowrap",
       "width": "1px",
     }
   }
@@ -34,6 +35,7 @@ exports[`MessageBlock should render correctly via snapshot for an empty message 
       "overflow": "hidden",
       "padding": 0,
       "position": "absolute",
+      "whiteSpace": "nowrap",
       "width": "1px",
     }
   }
