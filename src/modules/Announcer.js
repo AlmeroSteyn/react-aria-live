@@ -72,12 +72,12 @@ class Announcer extends Component {
       politeMessage2,
     } = this.state;
     return (
-      <div>
+      <React.Fragment>
         <MessageBlock aria-live="assertive" message={assertiveMessage1} />
         <MessageBlock aria-live="assertive" message={assertiveMessage2} />
         <MessageBlock aria-live="polite" message={politeMessage1} />
         <MessageBlock aria-live="polite" message={politeMessage2} />
-      </div>
+      </React.Fragment>
     );
   }
 }

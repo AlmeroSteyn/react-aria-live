@@ -5,95 +5,93 @@ exports[`Announcer should render correctly via snapshot 1`] = `
   assertiveMessage=""
   politeMessage=""
 >
-  <div>
-    <MessageBlock
+  <MessageBlock
+    aria-live="assertive"
+    message=""
+  >
+    <div
       aria-live="assertive"
-      message=""
-    >
-      <div
-        aria-live="assertive"
-        role="log"
-        style={
-          Object {
-            "border": 0,
-            "clip": "rect(0 0 0 0)",
-            "height": "1px",
-            "margin": "-1px",
-            "overflow": "hidden",
-            "padding": 0,
-            "position": "absolute",
-            "whiteSpace": "nowrap",
-            "width": "1px",
-          }
+      role="log"
+      style={
+        Object {
+          "border": 0,
+          "clip": "rect(0 0 0 0)",
+          "height": "1px",
+          "margin": "-1px",
+          "overflow": "hidden",
+          "padding": 0,
+          "position": "absolute",
+          "whiteSpace": "nowrap",
+          "width": "1px",
         }
-      />
-    </MessageBlock>
-    <MessageBlock
+      }
+    />
+  </MessageBlock>
+  <MessageBlock
+    aria-live="assertive"
+    message=""
+  >
+    <div
       aria-live="assertive"
-      message=""
-    >
-      <div
-        aria-live="assertive"
-        role="log"
-        style={
-          Object {
-            "border": 0,
-            "clip": "rect(0 0 0 0)",
-            "height": "1px",
-            "margin": "-1px",
-            "overflow": "hidden",
-            "padding": 0,
-            "position": "absolute",
-            "whiteSpace": "nowrap",
-            "width": "1px",
-          }
+      role="log"
+      style={
+        Object {
+          "border": 0,
+          "clip": "rect(0 0 0 0)",
+          "height": "1px",
+          "margin": "-1px",
+          "overflow": "hidden",
+          "padding": 0,
+          "position": "absolute",
+          "whiteSpace": "nowrap",
+          "width": "1px",
         }
-      />
-    </MessageBlock>
-    <MessageBlock
+      }
+    />
+  </MessageBlock>
+  <MessageBlock
+    aria-live="polite"
+    message=""
+  >
+    <div
       aria-live="polite"
-      message=""
-    >
-      <div
-        aria-live="polite"
-        role="log"
-        style={
-          Object {
-            "border": 0,
-            "clip": "rect(0 0 0 0)",
-            "height": "1px",
-            "margin": "-1px",
-            "overflow": "hidden",
-            "padding": 0,
-            "position": "absolute",
-            "whiteSpace": "nowrap",
-            "width": "1px",
-          }
+      role="log"
+      style={
+        Object {
+          "border": 0,
+          "clip": "rect(0 0 0 0)",
+          "height": "1px",
+          "margin": "-1px",
+          "overflow": "hidden",
+          "padding": 0,
+          "position": "absolute",
+          "whiteSpace": "nowrap",
+          "width": "1px",
         }
-      />
-    </MessageBlock>
-    <MessageBlock
+      }
+    />
+  </MessageBlock>
+  <MessageBlock
+    aria-live="polite"
+    message=""
+  >
+    <div
       aria-live="polite"
-      message=""
-    >
-      <div
-        aria-live="polite"
-        role="log"
-        style={
-          Object {
-            "border": 0,
-            "clip": "rect(0 0 0 0)",
-            "height": "1px",
-            "margin": "-1px",
-            "overflow": "hidden",
-            "padding": 0,
-            "position": "absolute",
-            "whiteSpace": "nowrap",
-            "width": "1px",
-          }
+      role="log"
+      style={
+        Object {
+          "border": 0,
+          "clip": "rect(0 0 0 0)",
+          "height": "1px",
+          "margin": "-1px",
+          "overflow": "hidden",
+          "padding": 0,
+          "position": "absolute",
+          "whiteSpace": "nowrap",
+          "width": "1px",
         }
-      />
-    </MessageBlock>
-  </div>
+      }
+    />
+  </MessageBlock>
 </Announcer>
 `;
