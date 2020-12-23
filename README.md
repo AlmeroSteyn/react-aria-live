@@ -121,4 +121,30 @@ class MyApp extends Component {
 export default MyApp;
 ```
 
-If you want to use these functions in lifecycle hooks, please pass them as props to the component in question.
+If you want to use these functions in lifecycle hooks, please pass them as props to the component in question, or if you're using React 16.8+ use the `useAriaLive` hook:
+
+```
+const MyFunctionalComponent = () => {
+  const { announcePolite, announceAssertive } = useAriaLive();
+  return (
+    <Fragment>
+      <button
+        type="button"
+        onClick={() => {
+          announceAssertive('ASSERTIVE MESSAGE');
+        }}>
+        Press me for an assertive message
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          announcePolite('Polite message');
+        }}>
+        Press me for a Polite message
+      </button>
+    </Fragment>
+  );
+};
+```
+
+Please note that your functional component should be rendered inside a `LiveAnnouncer`.
