@@ -5,7 +5,29 @@ import uuidv4 from 'uuid/v4';
 import LiveAnnouncer from '../../src/modules/LiveAnnouncer';
 import LiveMessage from '../../src/modules/LiveMessage';
 import LiveMessenger from '../../src/modules/LiveMessenger';
+import useAriaLive from '../../src/modules/useAriaLive';
 
+const MyFunctionalComponent = () => {
+  const { announcePolite, announceAssertive } = useAriaLive();
+  return (
+    <Fragment>
+      <button
+        type="button"
+        onClick={() => {
+          announceAssertive('HELLO WORLD WITH HOOK');
+        }}>
+        Click for assertive message via hook
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          announcePolite('Hello world with hook');
+        }}>
+        Click for polite message via hook
+      </button>
+    </Fragment>
+  );
+};
 class Demo extends Component {
   constructor(props) {
     super(props);
@@ -100,6 +122,7 @@ class Demo extends Component {
                     }}>
                     Rebroadcast the same message
                   </button>
+                  <MyFunctionalComponent />
                 </Fragment>
               )}
             </LiveMessenger>
