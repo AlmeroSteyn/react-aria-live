@@ -21,16 +21,15 @@
     "uuid": "^3.2.1"
   },
   "peerDependencies": {
-    "react": "^16.3.x"
+    "react": "^16.8.x || ^17"
   },
   "devDependencies": {
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.4.1",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
     "babel-preset-react-app": "^3.1.1",
     "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.10.0",
-    "enzyme-context-patch": "0.0.7",
     "enzyme-to-json": "3.3.0",
     "eslint": "4.10.0",
     "eslint-config-react-app": "2.1.0",
@@ -43,9 +42,9 @@
     "nwb": "0.22.x",
     "prettier": "1.12.1",
     "prop-types": "15.6.1",
-    "react": "16.4.0",
-    "react-dom": "16.4.0",
-    "react-test-renderer": "16.4.0"
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-test-renderer": "17.0.1"
   },
   "jest": {
     "collectCoverageFrom": [
