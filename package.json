@@ -39,7 +39,7 @@
     "eslint-plugin-jsx-a11y": "5.1.1",
     "eslint-plugin-react": "7.4.0",
     "jest": "22.1.4",
-    "nwb": "0.22.x",
+    "nwb": "0.23.x",
     "prettier": "1.12.1",
     "prop-types": "15.6.1",
     "react": "17.0.2",
