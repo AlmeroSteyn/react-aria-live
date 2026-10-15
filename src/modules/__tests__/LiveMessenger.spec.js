@@ -1,106 +1,141 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import React, { act } from 'react';
+import { createRoot } from 'react-dom/client';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import LiveMessenger from '../LiveMessenger';
 import LiveAnnouncer from '../LiveAnnouncer';
+import { useAnnouncer } from '../useAnnouncer';
 
-describe('LiveMessage', () => {
-  it('should announce assertive messages', () => {
-    const wrapper = mount(
-      <LiveAnnouncer>
-        <LiveMessenger>
-          {({ announceAssertive }) => (
-            <button
-              onClick={() => {
-                announceAssertive('Demo message');
-              }}
-            />
-          )}
-        </LiveMessenger>
-      </LiveAnnouncer>
-    );
+globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 
-    wrapper.find('button').simulate('click');
+function HookConsumerButton() {
+  const { announcePolite, announceAssertive } = useAnnouncer();
+  return (
+    <div>
+      <button
+        id="hook-polite"
+        type="button"
+        onClick={() => announcePolite('Polite from hook')}
+      />
+      <button
+        id="hook-assertive"
+        type="button"
+        onClick={() => announceAssertive('Assertive from hook')}
+      />
+    </div>
+  );
+}
 
-    expect(
-      wrapper
-        .find('MessageBlock')
-        .at(0)
-        .text()
-    ).toBe('Demo message');
-    expect(
-      wrapper
-        .find('MessageBlock')
-        .at(1)
-        .text()
-    ).toBe('');
-    expect(
-      wrapper
-        .find('MessageBlock')
-        .at(2)
-        .text()
-    ).toBe('');
-    expect(
-      wrapper
-        .find('MessageBlock')
-        .at(3)
-        .text()
-    ).toBe('');
+describe('LiveMessenger and useAnnouncer', () => {
+  let container;
+  let root;
+
+  beforeEach(() => {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    root = createRoot(container);
   });
 
-  it('should announce polite messages', () => {
-    const wrapper = mount(
-      <LiveAnnouncer>
-        <LiveMessenger>
-          {({ announcePolite }) => (
-            <button
-              onClick={() => {
-                announcePolite('Demo message');
-              }}
-            />
-          )}
-        </LiveMessenger>
-      </LiveAnnouncer>
-    );
-
-    wrapper.find('button').simulate('click');
-
-    expect(
-      wrapper
-        .find('MessageBlock')
-        .at(0)
-        .text()
-    ).toBe('');
-    expect(
-      wrapper
-        .find('MessageBlock')
-        .at(1)
-        .text()
-    ).toBe('');
-    expect(
-      wrapper
-        .find('MessageBlock')
-        .at(2)
-        .text()
-    ).toBe('Demo message');
-    expect(
-      wrapper
-        .find('MessageBlock')
-        .at(3)
-        .text()
-    ).toBe('');
+  afterEach(() => {
+    act(() => {
+      root.unmount();
+    });
+    container.remove();
   });
 
-  it('should pass dummy functions without LiveAnnouncer', () => {
-    mount(
-      <LiveMessenger>
-        {context => {
-          expect(context).toBeDefined();
-          expect(context).toHaveProperty('announceAssertive');
-          expect(typeof context.announceAssertive).toBe('function');
-          expect(context).toHaveProperty('announcePolite');
-          expect(typeof context.announcePolite).toBe('function');
-        }}
-      </LiveMessenger>
-    );
+  it('should announce assertive messages via LiveMessenger', () => {
+    act(() => {
+      root.render(
+        <LiveAnnouncer>
+          <LiveMessenger>
+            {({ announceAssertive }) => (
+              <button
+                type="button"
+                onClick={() => {
+                  announceAssertive('Demo message');
+                }}
+              />
+            )}
+          </LiveMessenger>
+        </LiveAnnouncer>
+      );
+    });
+
+    act(() => {
+      container.querySelector('button').click();
+    });
+
+    const blocks = container.querySelectorAll('[aria-live]');
+    expect(blocks[0].textContent).toBe('Demo message');
+    expect(blocks[1].textContent).toBe('');
+    expect(blocks[2].textContent).toBe('');
+    expect(blocks[3].textContent).toBe('');
+  });
+
+  it('should announce polite messages via LiveMessenger', () => {
+    act(() => {
+      root.render(
+        <LiveAnnouncer>
+          <LiveMessenger>
+            {({ announcePolite }) => (
+              <button
+                type="button"
+                onClick={() => {
+                  announcePolite('Demo message');
+                }}
+              />
+            )}
+          </LiveMessenger>
+        </LiveAnnouncer>
+      );
+    });
+
+    act(() => {
+      container.querySelector('button').click();
+    });
+
+    const blocks = container.querySelectorAll('[aria-live]');
+    expect(blocks[0].textContent).toBe('');
+    expect(blocks[1].textContent).toBe('');
+    expect(blocks[2].textContent).toBe('Demo message');
+    expect(blocks[3].textContent).toBe('');
+  });
+
+  it('should announce polite and assertive messages via useAnnouncer hook', () => {
+    act(() => {
+      root.render(
+        <LiveAnnouncer>
+          <HookConsumerButton />
+        </LiveAnnouncer>
+      );
+    });
+
+    act(() => {
+      container.querySelector('#hook-polite').click();
+    });
+
+    let blocks = container.querySelectorAll('[aria-live]');
+    expect(blocks[2].textContent).toBe('Polite from hook');
+
+    act(() => {
+      container.querySelector('#hook-assertive').click();
+    });
+
+    blocks = container.querySelectorAll('[aria-live]');
+    expect(blocks[0].textContent).toBe('Assertive from hook');
+  });
+
+  it('should pass fallback functions without LiveAnnouncer', () => {
+    act(() => {
+      root.render(
+        <LiveMessenger>
+          {(context) => {
+            expect(context).toBeDefined();
+            expect(typeof context.announceAssertive).toBe('function');
+            expect(typeof context.announcePolite).toBe('function');
+            return null;
+          }}
+        </LiveMessenger>
+      );
+    });
   });
 });

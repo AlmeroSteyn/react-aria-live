@@ -1,100 +1,82 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import React, { act } from 'react';
+import { createRoot } from 'react-dom/client';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import LiveMessage from '../LiveMessage';
 import LiveAnnouncer from '../LiveAnnouncer';
 
-describe('LiveMessage', () => {
-  it('should announce assertive messages', () => {
-    const wrapper = mount(
-      <LiveAnnouncer>
-        <LiveMessage message="Demo message" aria-live="assertive" />
-      </LiveAnnouncer>
-    );
+globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 
-    expect(
-      wrapper
-        .find('MessageBlock')
-        .at(0)
-        .text()
-    ).toBe('Demo message');
-    expect(
-      wrapper
-        .find('MessageBlock')
-        .at(1)
-        .text()
-    ).toBe('');
-    expect(
-      wrapper
-        .find('MessageBlock')
-        .at(2)
-        .text()
-    ).toBe('');
-    expect(
-      wrapper
-        .find('MessageBlock')
-        .at(3)
-        .text()
-    ).toBe('');
+describe('LiveMessage', () => {
+  let container;
+  let root;
+
+  beforeEach(() => {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    root = createRoot(container);
+  });
+
+  afterEach(() => {
+    act(() => {
+      root.unmount();
+    });
+    container.remove();
+    vi.restoreAllMocks();
+  });
+
+  it('should announce assertive messages', () => {
+    act(() => {
+      root.render(
+        <LiveAnnouncer>
+          <LiveMessage message="Demo message" aria-live="assertive" />
+        </LiveAnnouncer>
+      );
+    });
+
+    const blocks = container.querySelectorAll('[aria-live]');
+    expect(blocks[0].textContent).toBe('Demo message');
+    expect(blocks[1].textContent).toBe('');
+    expect(blocks[2].textContent).toBe('');
+    expect(blocks[3].textContent).toBe('');
   });
 
   it('should fail gracefully for assertive messages without LiveAnnouncer', () => {
-    const warn = jest
-      .spyOn(console, 'warn')
-      .mockImplementation(() => undefined);
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
 
-    expect(() =>
-      mount(<LiveMessage message="Demo message" aria-live="assertive" />)
-    ).not.toThrow();
+    expect(() => {
+      act(() => {
+        root.render(<LiveMessage message="Demo message" aria-live="assertive" />);
+      });
+    }).not.toThrow();
 
     expect(warn).toHaveBeenCalled();
   });
 
   it('should announce polite messages', () => {
-    const wrapper = mount(
-      <LiveAnnouncer>
-        <LiveMessage message="Demo message" aria-live="polite" />
-      </LiveAnnouncer>
-    );
+    act(() => {
+      root.render(
+        <LiveAnnouncer>
+          <LiveMessage message="Demo message" aria-live="polite" />
+        </LiveAnnouncer>
+      );
+    });
 
-    expect(
-      wrapper
-        .find('MessageBlock')
-        .at(0)
-        .text()
-    ).toBe('');
-    expect(
-      wrapper
-        .find('MessageBlock')
-        .at(1)
-        .text()
-    ).toBe('');
-    expect(
-      wrapper
-        .find('MessageBlock')
-        .at(2)
-        .text()
-    ).toBe('Demo message');
-    expect(
-      wrapper
-        .find('MessageBlock')
-        .at(3)
-        .text()
-    ).toBe('');
+    const blocks = container.querySelectorAll('[aria-live]');
+    expect(blocks[0].textContent).toBe('');
+    expect(blocks[1].textContent).toBe('');
+    expect(blocks[2].textContent).toBe('Demo message');
+    expect(blocks[3].textContent).toBe('');
   });
 
   it('should fail gracefully for polite messages without LiveAnnouncer', () => {
-    const warn = jest
-      .spyOn(console, 'warn')
-      .mockImplementation(() => undefined);
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
 
-    expect(() =>
-      mount(<LiveMessage message="Demo message" aria-live="polite" />)
-    ).not.toThrow();
+    expect(() => {
+      act(() => {
+        root.render(<LiveMessage message="Demo message" aria-live="polite" />);
+      });
+    }).not.toThrow();
 
     expect(warn).toHaveBeenCalled();
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
   });
 });

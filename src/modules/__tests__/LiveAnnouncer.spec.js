@@ -1,28 +1,75 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import React, { act } from 'react';
+import { createRoot } from 'react-dom/client';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import LiveMessage from '../LiveMessage';
 import LiveAnnouncer from '../LiveAnnouncer';
 
-describe('LiveAnnouncer', () => {
-  it('should set polite messages', () => {
-    const wrapper = mount(
-      <LiveAnnouncer>
-        <LiveMessage message="Demo message" aria-live="polite" />
-      </LiveAnnouncer>
-    );
+globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 
-    expect(wrapper.state().announceAssertiveMessage).toBe('');
-    expect(wrapper.state().announcePoliteMessage).toBe('Demo message');
+describe('LiveAnnouncer', () => {
+  let container;
+  let root;
+
+  beforeEach(() => {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    root = createRoot(container);
   });
 
-  it('should set assertive messages', () => {
-    const wrapper = mount(
-      <LiveAnnouncer>
-        <LiveMessage message="Demo message" aria-live="assertive" />
-      </LiveAnnouncer>
-    );
+  afterEach(() => {
+    act(() => {
+      root.unmount();
+    });
+    container.remove();
+  });
 
-    expect(wrapper.state().announceAssertiveMessage).toBe('Demo message');
-    expect(wrapper.state().announcePoliteMessage).toBe('');
+  it('should set polite messages in DOM live region', () => {
+    act(() => {
+      root.render(
+        <LiveAnnouncer>
+          <LiveMessage message="Demo message" aria-live="polite" />
+        </LiveAnnouncer>
+      );
+    });
+
+    const blocks = container.querySelectorAll('[aria-live]');
+    expect(blocks[0].textContent).toBe('');
+    expect(blocks[2].textContent).toBe('Demo message');
+  });
+
+  it('should set assertive messages in DOM live region', () => {
+    act(() => {
+      root.render(
+        <LiveAnnouncer>
+          <LiveMessage message="Demo message" aria-live="assertive" />
+        </LiveAnnouncer>
+      );
+    });
+
+    const blocks = container.querySelectorAll('[aria-live]');
+    expect(blocks[0].textContent).toBe('Demo message');
+    expect(blocks[2].textContent).toBe('');
+  });
+
+  it('should re-trigger initial mount announcement on next frame for VoiceOver AXLiveRegionChanged', async () => {
+    act(() => {
+      root.render(
+        <LiveAnnouncer>
+          <LiveMessage message="Initial route loaded" aria-live="polite" />
+        </LiveAnnouncer>
+      );
+    });
+
+    let blocks = container.querySelectorAll('[aria-live]');
+    expect(blocks[2].textContent).toBe('Initial route loaded');
+    expect(blocks[3].textContent).toBe('');
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 80));
+    });
+
+    blocks = container.querySelectorAll('[aria-live]');
+    expect(blocks[2].textContent).toBe('');
+    expect(blocks[3].textContent).toBe('Initial route loaded');
   });
 });

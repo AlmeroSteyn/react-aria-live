@@ -1,71 +1,101 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import { mountToJson } from 'enzyme-to-json';
+import React, { act } from 'react';
+import { createRoot } from 'react-dom/client';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import Announcer from '../Announcer';
 
+globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+
 describe('Announcer', () => {
-  it('should render correctly via snapshot', () => {
-    const wrapper = mount(<Announcer assertiveMessage="" politeMessage="" />);
+  let container;
+  let root;
 
-    const tree = mountToJson(wrapper);
-    expect(tree).toMatchSnapshot();
+  beforeEach(() => {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    root = createRoot(container);
   });
 
-  it('should alternate assertive messages', () => {
-    const wrapper = mount(
-      <Announcer
-        assertiveMessage="I am a message"
-        politeMessage=""
-        assertiveMessageId=""
-        politeMessageId=""
-      />
-    );
-
-    expect(wrapper.state().assertiveMessage1).toBe('I am a message');
-    expect(wrapper.state().assertiveMessage2).toBe('');
-
-    expect(wrapper.find('MessageBlock').get(0).props.message).toBe(
-      'I am a message'
-    );
-    expect(wrapper.find('MessageBlock').get(1).props.message).toBe('');
-
-    wrapper.setProps({ assertiveMessage: 'I am a changed message' });
-
-    expect(wrapper.state().assertiveMessage1).toBe('');
-    expect(wrapper.state().assertiveMessage2).toBe('I am a changed message');
-
-    expect(wrapper.find('MessageBlock').get(0).props.message).toEqual('');
-    expect(wrapper.find('MessageBlock').get(1).props.message).toEqual(
-      'I am a changed message'
-    );
+  afterEach(() => {
+    act(() => {
+      root.unmount();
+    });
+    container.remove();
   });
 
-  it('should alternate polite messages', () => {
-    const wrapper = mount(
-      <Announcer
-        assertiveMessage=""
-        politeMessage="I am a message"
-        assertiveMessageId=""
-        politeMessageId=""
-      />
-    );
+  it('should render 4 live region blocks (2 assertive, 2 polite)', () => {
+    act(() => {
+      root.render(<Announcer assertiveMessage="" politeMessage="" />);
+    });
 
-    expect(wrapper.state().politeMessage1).toBe('I am a message');
-    expect(wrapper.state().politeMessage2).toBe('');
+    const blocks = container.querySelectorAll('[aria-live]');
+    expect(blocks.length).toBe(4);
+    expect(blocks[0].getAttribute('aria-live')).toBe('assertive');
+    expect(blocks[1].getAttribute('aria-live')).toBe('assertive');
+    expect(blocks[2].getAttribute('aria-live')).toBe('polite');
+    expect(blocks[3].getAttribute('aria-live')).toBe('polite');
+  });
 
-    expect(wrapper.find('MessageBlock').get(2).props.message).toBe(
-      'I am a message'
-    );
-    expect(wrapper.find('MessageBlock').get(3).props.message).toBe('');
+  it('should alternate assertive messages between block 0 and block 1', () => {
+    act(() => {
+      root.render(
+        <Announcer
+          assertiveMessage="I am a message"
+          politeMessage=""
+          assertiveMessageId=""
+          politeMessageId=""
+        />
+      );
+    });
 
-    wrapper.setProps({ politeMessage: 'I am a changed message' });
+    let blocks = container.querySelectorAll('[aria-live]');
+    expect(blocks[0].textContent).toBe('I am a message');
+    expect(blocks[1].textContent).toBe('');
 
-    expect(wrapper.state().politeMessage1).toBe('');
-    expect(wrapper.state().politeMessage2).toBe('I am a changed message');
+    act(() => {
+      root.render(
+        <Announcer
+          assertiveMessage="I am a changed message"
+          politeMessage=""
+          assertiveMessageId=""
+          politeMessageId=""
+        />
+      );
+    });
 
-    expect(wrapper.find('MessageBlock').get(2).props.message).toEqual('');
-    expect(wrapper.find('MessageBlock').get(3).props.message).toEqual(
-      'I am a changed message'
-    );
+    blocks = container.querySelectorAll('[aria-live]');
+    expect(blocks[0].textContent).toBe('');
+    expect(blocks[1].textContent).toBe('I am a changed message');
+  });
+
+  it('should alternate polite messages between block 2 and block 3', () => {
+    act(() => {
+      root.render(
+        <Announcer
+          assertiveMessage=""
+          politeMessage="I am a message"
+          assertiveMessageId=""
+          politeMessageId=""
+        />
+      );
+    });
+
+    let blocks = container.querySelectorAll('[aria-live]');
+    expect(blocks[2].textContent).toBe('I am a message');
+    expect(blocks[3].textContent).toBe('');
+
+    act(() => {
+      root.render(
+        <Announcer
+          assertiveMessage=""
+          politeMessage="I am a changed message"
+          assertiveMessageId=""
+          politeMessageId=""
+        />
+      );
+    });
+
+    blocks = container.querySelectorAll('[aria-live]');
+    expect(blocks[2].textContent).toBe('');
+    expect(blocks[3].textContent).toBe('I am a changed message');
   });
 });

@@ -1,98 +1,55 @@
 {
   "name": "react-aria-live",
-  "version": "2.0.5",
-  "description": "Add aria-live messaging to your React app",
-  "main": "lib/index.js",
-  "module": "es/index.js",
+  "version": "3.0.0",
+  "description": "Broadcast aria-live messages to VoiceOver, NVDA, JAWS, and TalkBack from anywhere in your React app",
+  "type": "module",
+  "main": "dist/react-aria-live.cjs",
+  "module": "dist/react-aria-live.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./dist/react-aria-live.js",
+      "require": "./dist/react-aria-live.cjs"
+    }
+  },
   "files": [
-    "css",
-    "es",
-    "lib",
-    "umd"
+    "dist",
+    "index.d.ts"
   ],
   "scripts": {
-    "build": "nwb build-react-component",
-    "clean": "nwb clean-module && nwb clean-demo",
-    "start": "nwb serve-react-demo",
-    "test": "node scripts/test.js --env=jsdom",
-    "format": "prettier --write --single-quote --tab-width=2 --trailing-comma=es5 --jsx-bracket-same-line src/**/*.js"
+    "dev": "vite",
+    "start": "vite",
+    "build": "vite build",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
-    "uuid": "^3.2.1"
+    "prop-types": "15.8.1"
   },
   "peerDependencies": {
-    "react": "^16.3.x"
+    "react": ">=16.3.0"
   },
   "devDependencies": {
-    "babel-core": "6.26.0",
-    "babel-eslint": "7.2.3",
-    "babel-jest": "20.0.3",
-    "babel-preset-react-app": "^3.1.1",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.10.0",
-    "enzyme-context-patch": "0.0.7",
-    "enzyme-to-json": "3.3.0",
-    "eslint": "4.10.0",
-    "eslint-config-react-app": "2.1.0",
-    "eslint-loader": "1.9.0",
-    "eslint-plugin-flowtype": "2.39.1",
-    "eslint-plugin-import": "2.8.0",
-    "eslint-plugin-jsx-a11y": "5.1.1",
-    "eslint-plugin-react": "7.4.0",
-    "jest": "22.1.4",
-    "nwb": "0.22.x",
-    "prettier": "1.12.1",
-    "prop-types": "15.6.1",
-    "react": "16.4.0",
-    "react-dom": "16.4.0",
-    "react-test-renderer": "16.4.0"
+    "@vitejs/plugin-react": "5.1.4",
+    "jsdom": "30.1.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "vite": "7.3.1",
+    "vitest": "5.0.3"
   },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/modules/**/*.{js,jsx}"
-    ],
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js"
-    ],
-    "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js",
-    "testMatch": [
-      "<rootDir>/src/modules/**/__tests__/**/*.js?(x)",
-      "<rootDir>/src/modules/**/?(*.)(spec|test).js?(x)"
-    ],
-    "testEnvironment": "node",
-    "testURL": "http://localhost",
-    "transform": {
-      "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
-    ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web"
-    },
-    "moduleFileExtensions": [
-      "web.js",
-      "js",
-      "json",
-      "web.jsx",
-      "jsx"
-    ]
-  },
-  "author": "Almero Steyn",
-  "homepage": "",
+  "author": "Almero Steyn, Diego Javier Mena Amado",
   "license": "MIT",
-  "repository": "https://github.com/AlmeroSteyn/react-aria-live",
+  "repository": "https://github.com/ingelectronicadj/react-aria-live",
   "keywords": [
-    "react-component"
-  ],
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  }
+    "react",
+    "react-component",
+    "accessibility",
+    "a11y",
+    "aria-live",
+    "voiceover",
+    "nvda",
+    "screen-reader",
+    "wcag"
+  ]
 }

@@ -1,124 +1,174 @@
 # react-aria-live
 
-**Please Note**: As of version 2.0.0 this package no longer supports the old pre React 16.3 context API. If you are still using an older version of React, please use the latest 1.x release of react-aria-live.
+Broadcast `aria-live` messages to assistive technology (**VoiceOver on macOS/iOS, NVDA, JAWS, and TalkBack**) from anywhere in your React application.
 
-With this package you can broadcast `aria-live` messages to assistive technology from anywhere in your React applications.
+[ARIA Live Regions](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions) are used to communicate dynamic state changes, route transitions, toast notifications, and form validation errors to screen reader users.
 
-[ARIA Live Regions](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions) are used to communicate important information to `screen reader software`.
+The technical double announcer region implementation of `react-aria-live` was inspired by [ngA11y](https://github.com/dequelabs/ngA11y) and enhanced to ensure reliable cross-browser announcements on **WebKit / VoiceOver (`AXLiveRegion`)** as well as NVDA and JAWS.
 
-In web applications we make a lot of changes to our pages using JavaScript. These changes can be completely undetected by screen readers, meaning that not all our users are being notified of important changes to our applications.
+---
 
-A very common example in web applications, is the use of routing software. We need to tell screen readers that a new route has been loaded, as this is usually not automatically detected.
+## Key Features & What's New
 
-Other examples are error situations, or content and state changes in our application that could be very clear visually but not detected by screen readers.
+- **VoiceOver (macOS & iOS) + NVDA + JAWS + TalkBack Compatibility**:
+  - Uses semantic `role="status"` (`polite`) and `role="alert"` (`assertive`) with explicit `aria-atomic="true"` and `aria-relevant="additions text"` instead of `role="log"` (which had implicit `aria-atomic="false"` and `aria-live="polite"` in WebKit, preventing VoiceOver from announcing text replacements and assertive alerts).
+  - Automatically re-triggers initial mount announcements on the next frame so VoiceOver reliably reads `<LiveMessage>` components rendered on initial mount or route transitions (resolving Issues `#20` and `#37`).
+  - Fixes simultaneous `polite` + `assertive` state updates in `Announcer.getDerivedStateFromProps` when `clearOnUnmount` is used (resolving Issue `#20`).
+- **React Hook (`useAnnouncer` / `useAriaLive`)**:
+  - Broadcast messages from any functional component without class components or render-prop boilerplate (PR `#25`).
+- **No Extra Wrapper `<div>` in the DOM**:
+  - Renders the live region nodes inside a `React.Fragment` so placing `<LiveAnnouncer>` inside CSS Flex or Grid containers never breaks your layout (resolving Issue `#12`).
+- **React 16.8+, 17, 18 & 19 + TypeScript Support**:
+  - Broadened `peerDependencies` (`"react": ">=16.3.0"`, resolving Issue `#35`), bundled `index.d.ts` TypeScript definitions (resolving Issue `#14`), and removed the external `uuid` dependency in favor of native `crypto.randomUUID()` with an RFC4122 fallback.
 
-Using `react-aria-live` you can broadcast these important messages easily from any component in your application.
-
-The technical double announcer region implementation of `react-aria-live` was inspired by [ngA11y](https://github.com/dequelabs/ngA11y).
+---
 
 ## Installation
 
-```
+```bash
 npm install react-aria-live
 ```
 
 or
 
-```
+```bash
 yarn add react-aria-live
 ```
 
+---
+
 ## Usage
 
-The library exports three components, namely `LiveAnnouncer`, `LiveMessage` and `LiveMessenger`.
+The library exports:
+- **`LiveAnnouncer`**: Root provider component that renders the double-buffered visually hidden live regions.
+- **`useAnnouncer` (alias `useAriaLive`)**: React Hook returning `{ announcePolite, announceAssertive }`.
+- **`LiveMessage`**: Declarative component that announces whenever its `message` prop changes.
+- **`LiveMessenger`**: Render-prop component providing `{ announcePolite, announceAssertive }`.
 
-Firstly, wrap your React application in the `LiveAnnouncer` component. It will render a visually hidden message area in your application that can broadcast `aria-live` messages. `LiveAnnouncer` is best placed as high up as possible in your component tree, as `ARIA Live Regions` are sensitive to changes to the HTML rendering these regions. Best results are obtained when the HTML is rendered only once when the application root component is mounted.
+Wrap your application as high up as possible in `<LiveAnnouncer>` so the live regions remain mounted in the DOM across route and view changes.
 
-**Please note**: `react-aria-live` only broadcasts a message if the string value changes from the previous broadcast. This is done to keep verbosity down and avoid accidental duplication. If you want to rebroadcast the same message, please clear the live region with an empty string value first. The `LiveMessage` component accepts an optional `clearOnUnmount` prop to assist with this when unmounting the component. You can also mitigate this by passing a new id to the functions from `LiveMessenger`. More about this in the section below. 
+### 1. Using the `useAnnouncer` / `useAriaLive` Hook (Recommended)
 
-### LiveMessage
-If rendered inside a `LiveAnnouncer`, you can use the `LiveMessage` component to send `polite` or `assertive` messages. Messages are only triggered when the bound `message` prop changes.
+```jsx
+import React from 'react';
+import { LiveAnnouncer, useAnnouncer } from 'react-aria-live';
 
+function SaveButton() {
+  const { announcePolite, announceAssertive } = useAnnouncer();
+
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={() =>
+          announcePolite('Changes saved successfully', String(Date.now()))
+        }
+      >
+        Save Changes
+      </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          announceAssertive('Connection lost, please retry', String(Date.now()))
+        }
+      >
+        Trigger Error
+      </button>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <LiveAnnouncer>
+      <SaveButton />
+    </LiveAnnouncer>
+  );
+}
 ```
-import React, { Component } from 'react';
+
+### 2. Using `<LiveMessage />`
+
+If rendered inside a `LiveAnnouncer`, `<LiveMessage>` broadcasts `polite` or `assertive` messages whenever the `message` prop changes or when the component mounts with a non-empty `message`:
+
+```jsx
+import React, { useState } from 'react';
 import { LiveAnnouncer, LiveMessage } from 'react-aria-live';
 
-class MyApp extends Component {
-  state = {
-    a11yMessage: '',
-  };
+export default function MyApp() {
+  const [a11yMessage, setA11yMessage] = useState('');
 
-  render() {
-    return (
-      <LiveAnnouncer>
-        <LiveMessage message={this.state.a11yMessage} aria-live="polite" />
-        <button
-          onClick={() => {
-            this.setState({ a11yMessage: 'Button Pressed' });
-          }}>
-          Press me
-        </button>
-      </LiveAnnouncer>
-    );
-  }
+  return (
+    <LiveAnnouncer>
+      <LiveMessage message={a11yMessage} aria-live="polite" clearOnUnmount />
+      <button
+        type="button"
+        onClick={() => setA11yMessage('Button Pressed')}
+      >
+        Press me
+      </button>
+    </LiveAnnouncer>
+  );
 }
-
-export default MyApp;
 ```
 
-The `LiveMessage` component does not have to exist in the same component as `LiveAnnouncer`, as long as it exists inside a component tree wrapped by `LiveAnnouncer`.
+### 3. Using `<LiveMessenger />`
 
-Setting the optional `clearOnUnmount` prop to `true` will clear the live region text when the `LiveMessage` component is unmounted. This can be handy in cases where you want to repeatedly broadcast the same message. Using ID's, newly rendered components should broadcast the same message again so this is an escape hatch if you need to force the clear of the live region.
+For class components or render-prop patterns, `<LiveMessenger>` injects `{ announcePolite, announceAssertive }`:
 
-```
-<LiveMessage message="Some static message" aria-live="polite" clearOnUnmount="true" />
-```
-
-### LiveMessenger
-
-If rendered inside a `LiveAnnouncer`, you can use the `LiveMessage` component to send `polite` or `assertive` messages using javascript functions called `announcePolite` and `announceAssertive`.
-
-Use this component when you want to avoid a lot of boilerplate code to send screen-reader messages to via the `LiveMessage` component.
-
-This component accepts a render function as `children`. This render function injects the `announcePolite` and `announceAssertive` functions. Each of these functions can be called with a string message you would like to send to the screen-reader.
-
-These functions also accepts an optional second parameter which is a string ID value. By passing a new ID value with each call you can easily rebroadcast the same event message when required without writing complex code to clear the live region first. 
-
-```
-import React, { Component, Fragment } from 'react';
+```jsx
+import React, { Fragment } from 'react';
 import { LiveAnnouncer, LiveMessenger } from 'react-aria-live';
 
-class MyApp extends Component {
-
-  render() {
-    return (
-      <LiveAnnouncer>
-        <LiveMessenger>
-        {({announcePolite, announceAssertive}) => 
-            <Fragment>
-                <button
-                onClick={() => {
-                   //Call without ID. Will broadcast when string values changes.
-                   announcePolite('Polite message');
-                  }}>
-                  Press me for a polite message
-                </button>
-                <button
-                onClick={() => {
-                   //Call with ID. Will always broadcast when ID changes.
-                   announceAssertive('Assertive message', this.getUniqueId());
-                  }}>
-                  Press me for an assertive message
-                </button>
-            </Fragment>
-         }
-        </LiveMessenger>
-      </LiveAnnouncer>
-    );
-  }
+export default function MyApp() {
+  return (
+    <LiveAnnouncer>
+      <LiveMessenger>
+        {({ announcePolite, announceAssertive }) => (
+          <Fragment>
+            <button
+              type="button"
+              onClick={() => announcePolite('Polite message')}
+            >
+              Press me for a polite message
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                announceAssertive('Assertive message', String(Date.now()))
+              }
+            >
+              Press me for an assertive message
+            </button>
+          </Fragment>
+        )}
+      </LiveMessenger>
+    </LiveAnnouncer>
+  );
 }
-
-export default MyApp;
 ```
 
-If you want to use these functions in lifecycle hooks, please pass them as props to the component in question.
+---
+
+## Running the Interactive Demo & Tests Locally
+
+```bash
+# Install dependencies
+npm install
+
+# Start the interactive verification demo (with real-time DOM live-region inspector)
+npm run start
+
+# Run the unit test suite (Vitest + JSDOM)
+npm test
+
+# Build ESM + CommonJS bundles into dist/
+npm run build
+```
+
+---
+
+## License
+
+MIT · Original author: **Almero Steyn** · VoiceOver compatibility & modernization: **Diego Javier Mena Amado** (`@ingelectronicadj`).

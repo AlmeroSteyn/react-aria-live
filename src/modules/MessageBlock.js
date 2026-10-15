@@ -3,7 +3,8 @@ import React from 'react';
 
 const offScreenStyle = {
   border: 0,
-  clip: 'rect(0 0 0 0)',
+  clip: 'rect(0, 0, 0, 0)',
+  clipPath: 'inset(50%)',
   height: '1px',
   margin: '-1px',
   overflow: 'hidden',
@@ -13,15 +14,25 @@ const offScreenStyle = {
   position: 'absolute',
 };
 
-const MessageBlock = ({ message, 'aria-live': ariaLive }) => (
-  <div style={offScreenStyle} role="log" aria-live={ariaLive}>
-    {message ? message : ''}
-  </div>
-);
+const MessageBlock = ({ message, 'aria-live': ariaLive, role }) => {
+  const computedRole = role || (ariaLive === 'assertive' ? 'alert' : 'status');
+  return (
+    <div
+      style={offScreenStyle}
+      role={computedRole}
+      aria-live={ariaLive}
+      aria-atomic="true"
+      aria-relevant="additions text"
+    >
+      {message ? message : ''}
+    </div>
+  );
+};
 
 MessageBlock.propTypes = {
   message: PropTypes.string.isRequired,
   'aria-live': PropTypes.string.isRequired,
+  role: PropTypes.string,
 };
 
 export default MessageBlock;

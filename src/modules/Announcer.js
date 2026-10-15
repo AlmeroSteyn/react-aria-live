@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import MessageBlock from './MessageBlock';
 
 class Announcer extends Component {
@@ -18,7 +18,9 @@ class Announcer extends Component {
 
   static propTypes = {
     politeMessage: PropTypes.string,
+    politeMessageId: PropTypes.string,
     assertiveMessage: PropTypes.string,
+    assertiveMessageId: PropTypes.string,
   };
 
   static getDerivedStateFromProps(nextProps, state) {
@@ -35,11 +37,14 @@ class Announcer extends Component {
       assertiveMessageId,
     } = nextProps;
 
+    let nextState = null;
+
     if (
       oldPolitemessage !== politeMessage ||
       oldPoliteMessageId !== politeMessageId
     ) {
-      return {
+      nextState = {
+        ...(nextState || {}),
         politeMessage1: state.setAlternatePolite ? '' : politeMessage,
         politeMessage2: state.setAlternatePolite ? politeMessage : '',
         oldPolitemessage: politeMessage,
@@ -52,7 +57,8 @@ class Announcer extends Component {
       oldAssertiveMessage !== assertiveMessage ||
       oldAssertiveMessageId !== assertiveMessageId
     ) {
-      return {
+      nextState = {
+        ...(nextState || {}),
         assertiveMessage1: state.setAlternateAssertive ? '' : assertiveMessage,
         assertiveMessage2: state.setAlternateAssertive ? assertiveMessage : '',
         oldAssertiveMessage: assertiveMessage,
@@ -61,7 +67,7 @@ class Announcer extends Component {
       };
     }
 
-    return null;
+    return nextState;
   }
 
   render() {
@@ -72,12 +78,12 @@ class Announcer extends Component {
       politeMessage2,
     } = this.state;
     return (
-      <div>
+      <Fragment>
         <MessageBlock aria-live="assertive" message={assertiveMessage1} />
         <MessageBlock aria-live="assertive" message={assertiveMessage2} />
         <MessageBlock aria-live="polite" message={politeMessage1} />
         <MessageBlock aria-live="polite" message={politeMessage2} />
-      </div>
+      </Fragment>
     );
   }
 }
