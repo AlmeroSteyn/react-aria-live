@@ -47,4 +47,20 @@ describe('MessageBlock', () => {
     expect(div.getAttribute('aria-atomic')).toBe('true');
     expect(div.textContent).toBe('');
   });
+
+  it('should expose aria-hidden="true" when the message is empty and remove it when announced', () => {
+    act(() => {
+      root.render(<MessageBlock aria-live="polite" message="" />);
+    });
+
+    const div = container.querySelector('div');
+    expect(div.getAttribute('aria-hidden')).toBe('true');
+
+    act(() => {
+      root.render(<MessageBlock aria-live="polite" message="New announcement" />);
+    });
+
+    expect(div.getAttribute('aria-hidden')).toBeNull();
+    expect(div.textContent).toBe('New announcement');
+  });
 });

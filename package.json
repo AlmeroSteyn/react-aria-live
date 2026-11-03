@@ -1,6 +1,6 @@
 {
   "name": "react-aria-live",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Broadcast aria-live messages to VoiceOver, NVDA, JAWS, and TalkBack from anywhere in your React app",
   "type": "module",
   "main": "dist/react-aria-live.cjs",

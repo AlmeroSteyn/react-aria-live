@@ -1,3 +1,7 @@
+## 3.0.1
+
+- **Hide empty live regions from screen reader swipe navigation (`MessageBlock.js`)**: Added `aria-hidden="true"` whenever a `MessageBlock` has no message, so the four `role="status"` / `role="alert"` nodes are fully removed from the TalkBack and VoiceOver linear swipe order while idle (empty live regions previously sat in the accessibility tree and could surface as ghost "status" / "estado" stops on mobile). The attribute is dropped as soon as a message is broadcast, so announcements are unaffected.
+
 ## 3.0.0
 
 ### Screen Reader & VoiceOver Compatibility (macOS / iOS / Windows / Android)

@@ -23,6 +23,7 @@ const MessageBlock = ({ message, 'aria-live': ariaLive, role }) => {
       aria-live={ariaLive}
       aria-atomic="true"
       aria-relevant="additions text"
+      aria-hidden={!message ? 'true' : undefined}
     >
       {message ? message : ''}
     </div>
