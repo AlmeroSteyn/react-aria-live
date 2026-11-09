@@ -1,6 +1,19 @@
 import PropTypes from 'prop-types';
 import { Component } from 'react';
-import uuidv4 from 'uuid/v4';
+
+function generateId() {
+  if (
+    typeof crypto !== 'undefined' &&
+    typeof crypto.randomUUID === 'function'
+  ) {
+    return crypto.randomUUID();
+  }
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
 
 class AnnouncerMessage extends Component {
   static propTypes = {
@@ -41,10 +54,10 @@ class AnnouncerMessage extends Component {
       announcePolite,
     } = this.props;
     if (ariaLive === 'assertive') {
-      announceAssertive(message || '', uuidv4());
+      announceAssertive(message || '', generateId());
     }
     if (ariaLive === 'polite') {
-      announcePolite(message || '', uuidv4());
+      announcePolite(message || '', generateId());
     }
   };
 

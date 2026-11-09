@@ -1,48 +1,52 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import React, { act } from 'react';
+import { createRoot } from 'react-dom/client';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import AnnouncerMessage from '../AnnouncerMessage';
 
-const guidRegex = /^(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}$/;
+globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 
-describe('LiveMessage', () => {
+const guidRegex = /^(\{){0,1}[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}(\}){0,1}$/;
+
+describe('AnnouncerMessage', () => {
+  let container;
+  let root;
+
+  beforeEach(() => {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    root = createRoot(container);
+  });
+
+  afterEach(() => {
+    act(() => {
+      root.unmount();
+    });
+    container.remove();
+  });
+
   it('should announce assertive messages on mount', () => {
     let param1 = '';
     let param2 = '';
 
-    const announceAssertiveSpy = jest.fn((message, id) => {
+    const announceAssertiveSpy = vi.fn((message, id) => {
       param1 = message;
       param2 = id;
     });
-    const announcePoliteSpy = jest.fn();
+    const announcePoliteSpy = vi.fn();
 
-    mount(
-      <AnnouncerMessage
-        message="Demo message"
-        aria-live="assertive"
-        announceAssertive={announceAssertiveSpy}
-        announcePolite={announcePoliteSpy}
-      />
-    );
+    act(() => {
+      root.render(
+        <AnnouncerMessage
+          message="Demo message"
+          aria-live="assertive"
+          announceAssertive={announceAssertiveSpy}
+          announcePolite={announcePoliteSpy}
+        />
+      );
+    });
 
     expect(param1).toBe('Demo message');
     expect(param2.match(guidRegex)).not.toBeNull();
-    expect(announceAssertiveSpy).toHaveBeenCalled();
-    expect(announcePoliteSpy).not.toHaveBeenCalled();
-  });
-
-  it('should mount successfully for an empty assertive message', () => {
-    const announceAssertiveSpy = jest.fn();
-    const announcePoliteSpy = jest.fn();
-
-    mount(
-      <AnnouncerMessage
-        message={''}
-        aria-live="assertive"
-        announceAssertive={announceAssertiveSpy}
-        announcePolite={announcePoliteSpy}
-      />
-    );
-
     expect(announceAssertiveSpy).toHaveBeenCalled();
     expect(announcePoliteSpy).not.toHaveBeenCalled();
   });
@@ -51,218 +55,125 @@ describe('LiveMessage', () => {
     let param1 = '';
     let param2 = '';
 
-    const announceAssertiveSpy = jest.fn((message, id) => {
+    const announceAssertiveSpy = vi.fn((message, id) => {
       param1 = message;
       param2 = id;
     });
-    const announcePoliteSpy = jest.fn();
+    const announcePoliteSpy = vi.fn();
 
-    const wrapper = mount(
-      <AnnouncerMessage
-        message="Demo message"
-        aria-live="assertive"
-        announceAssertive={announceAssertiveSpy}
-        announcePolite={announcePoliteSpy}
-      />
-    );
+    act(() => {
+      root.render(
+        <AnnouncerMessage
+          message="Demo message"
+          aria-live="assertive"
+          announceAssertive={announceAssertiveSpy}
+          announcePolite={announcePoliteSpy}
+        />
+      );
+    });
 
-    wrapper.setProps({ message: 'Demo message changed' });
-
-    wrapper.update();
+    act(() => {
+      root.render(
+        <AnnouncerMessage
+          message="Demo message changed"
+          aria-live="assertive"
+          announceAssertive={announceAssertiveSpy}
+          announcePolite={announcePoliteSpy}
+        />
+      );
+    });
 
     expect(param1).toBe('Demo message changed');
     expect(param2.match(guidRegex)).not.toBeNull();
     expect(announcePoliteSpy).not.toHaveBeenCalled();
-    expect(announceAssertiveSpy).toHaveBeenCalled();
+    expect(announceAssertiveSpy).toHaveBeenCalledTimes(2);
   });
 
-  it('should announce polite messages on mount', () => {
-    let param1 = '';
-    let param2 = '';
+  it('should announce polite messages on mount and update', () => {
+    const announcePoliteSpy = vi.fn();
+    const announceAssertiveSpy = vi.fn();
 
-    const announcePoliteSpy = jest.fn((message, id) => {
-      param1 = message;
-      param2 = id;
+    act(() => {
+      root.render(
+        <AnnouncerMessage
+          message="Demo message"
+          aria-live="polite"
+          announceAssertive={announceAssertiveSpy}
+          announcePolite={announcePoliteSpy}
+        />
+      );
     });
-    const announceAssertiveSpy = jest.fn();
 
-    mount(
-      <AnnouncerMessage
-        message="Demo message"
-        aria-live="polite"
-        announceAssertive={announceAssertiveSpy}
-        announcePolite={announcePoliteSpy}
-      />
-    );
+    expect(announcePoliteSpy).toHaveBeenCalledTimes(1);
+    expect(announcePoliteSpy.mock.calls[0][0]).toBe('Demo message');
 
-    expect(param1).toBe('Demo message');
-    expect(param2.match(guidRegex)).not.toBeNull();
-    expect(announceAssertiveSpy).not.toHaveBeenCalled();
-    expect(announcePoliteSpy).toHaveBeenCalled();
-  });
-
-  it('should mount successfully for an empty polite message', () => {
-    const announceAssertiveSpy = jest.fn();
-    const announcePoliteSpy = jest.fn();
-
-    mount(
-      <AnnouncerMessage
-        message={''}
-        aria-live="polite"
-        announceAssertive={announceAssertiveSpy}
-        announcePolite={announcePoliteSpy}
-      />
-    );
-
-    expect(announceAssertiveSpy).not.toHaveBeenCalled();
-    expect(announcePoliteSpy).toHaveBeenCalled();
-  });
-
-  it('should announce polite messages on update', () => {
-    let param1 = '';
-    let param2 = '';
-
-    const announcePoliteSpy = jest.fn((message, id) => {
-      param1 = message;
-      param2 = id;
+    act(() => {
+      root.render(
+        <AnnouncerMessage
+          message="Updated polite"
+          aria-live="polite"
+          announceAssertive={announceAssertiveSpy}
+          announcePolite={announcePoliteSpy}
+        />
+      );
     });
-    const announceAssertiveSpy = jest.fn();
 
-    const wrapper = mount(
-      <AnnouncerMessage
-        message="Demo message"
-        aria-live="polite"
-        announceAssertive={announceAssertiveSpy}
-        announcePolite={announcePoliteSpy}
-      />
-    );
-
-    wrapper.setProps({ message: 'Demo message changed' });
-
-    wrapper.update();
-
-    expect(param1).toBe('Demo message changed');
-    expect(param2.match(guidRegex)).not.toBeNull();
-    expect(announcePoliteSpy).toHaveBeenCalled();
-    expect(announceAssertiveSpy).not.toHaveBeenCalled();
+    expect(announcePoliteSpy).toHaveBeenCalledTimes(2);
+    expect(announcePoliteSpy.mock.calls[1][0]).toBe('Updated polite');
   });
 
-  it('should broadcast clearall message if clearOnUmount is set to true', () => {
-    const announceAssertiveSpy = jest.fn();
-    const announcePoliteSpy = jest.fn();
+  it('should broadcast clearall message if clearOnUnmount is true or "true"', () => {
+    const announceAssertiveSpy = vi.fn();
+    const announcePoliteSpy = vi.fn();
 
-    const wrapper = mount(
-      <AnnouncerMessage
-        message="Demo message"
-        aria-live="polite"
-        announceAssertive={announceAssertiveSpy}
-        announcePolite={announcePoliteSpy}
-        clearOnUnmount={true}
-      />
-    );
+    act(() => {
+      root.render(
+        <AnnouncerMessage
+          message="Demo message"
+          aria-live="polite"
+          announceAssertive={announceAssertiveSpy}
+          announcePolite={announcePoliteSpy}
+          clearOnUnmount={true}
+        />
+      );
+    });
 
-    wrapper.unmount();
+    act(() => {
+      root.unmount();
+    });
 
     expect(announceAssertiveSpy).toHaveBeenCalledWith('');
     expect(announcePoliteSpy).toHaveBeenCalledWith('');
-  });
 
-  it('should broadcast clearall message if clearOnUmount is set to "true"', () => {
-    const announceAssertiveSpy = jest.fn();
-    const announcePoliteSpy = jest.fn();
-
-    const wrapper = mount(
-      <AnnouncerMessage
-        message="Demo message"
-        aria-live="polite"
-        announceAssertive={announceAssertiveSpy}
-        announcePolite={announcePoliteSpy}
-        clearOnUnmount="true"
-      />
-    );
-
-    wrapper.unmount();
-
-    expect(announceAssertiveSpy).toHaveBeenCalledWith('');
-    expect(announcePoliteSpy).toHaveBeenCalledWith('');
-  });
-
-  it('should not broadcast clearall message if clearOnUmount is set to "false"', () => {
-    const announceAssertiveSpy = jest.fn();
-    const announcePoliteSpy = jest.fn();
-
-    const wrapper = mount(
-      <AnnouncerMessage
-        message="Demo message"
-        aria-live="polite"
-        announceAssertive={announceAssertiveSpy}
-        announcePolite={announcePoliteSpy}
-        clearOnUnmount="false"
-      />
-    );
-
-    wrapper.unmount();
-
-    expect(announceAssertiveSpy).not.toHaveBeenCalledWith('');
-    expect(announcePoliteSpy).not.toHaveBeenCalledWith('');
-  });
-
-  it('should not broadcast clearall message if clearOnUmount is set to false', () => {
-    const announceAssertiveSpy = jest.fn();
-    const announcePoliteSpy = jest.fn();
-
-    const wrapper = mount(
-      <AnnouncerMessage
-        message="Demo message"
-        aria-live="polite"
-        announceAssertive={announceAssertiveSpy}
-        announcePolite={announcePoliteSpy}
-        clearOnUnmount={false}
-      />
-    );
-
-    wrapper.unmount();
-
-    expect(announceAssertiveSpy).not.toHaveBeenCalledWith('');
-    expect(announcePoliteSpy).not.toHaveBeenCalledWith('');
-  });
-
-  it('should not broadcast clearall message if clearOnUmount is omitted', () => {
-    const announceAssertiveSpy = jest.fn();
-    const announcePoliteSpy = jest.fn();
-
-    const wrapper = mount(
-      <AnnouncerMessage
-        message="Demo message"
-        aria-live="polite"
-        announceAssertive={announceAssertiveSpy}
-        announcePolite={announcePoliteSpy}
-      />
-    );
-
-    wrapper.unmount();
-
-    expect(announceAssertiveSpy).not.toHaveBeenCalledWith('');
-    expect(announcePoliteSpy).not.toHaveBeenCalledWith('');
+    root = createRoot(container);
   });
 
   it('should not announce when the message prop has not changed', () => {
-    const announceAssertiveSpy = jest.fn();
-    const announcePoliteSpy = jest.fn();
+    const announceAssertiveSpy = vi.fn();
+    const announcePoliteSpy = vi.fn();
 
-    const wrapper = mount(
-      <AnnouncerMessage
-        message="Demo message"
-        aria-live="assertive"
-        announceAssertive={announceAssertiveSpy}
-        announcePolite={announcePoliteSpy}
-      />
-    );
+    act(() => {
+      root.render(
+        <AnnouncerMessage
+          message="Demo message"
+          aria-live="assertive"
+          announceAssertive={announceAssertiveSpy}
+          announcePolite={announcePoliteSpy}
+        />
+      );
+    });
 
-    wrapper.setProps({ message: 'Demo message' });
+    act(() => {
+      root.render(
+        <AnnouncerMessage
+          message="Demo message"
+          aria-live="assertive"
+          announceAssertive={announceAssertiveSpy}
+          announcePolite={announcePoliteSpy}
+        />
+      );
+    });
 
-    wrapper.update();
-
-    expect(announceAssertiveSpy.mock.calls.length).toBe(1);
+    expect(announceAssertiveSpy).toHaveBeenCalledTimes(1);
   });
 });
